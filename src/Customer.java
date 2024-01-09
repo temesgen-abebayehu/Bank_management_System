@@ -1,6 +1,5 @@
 
 import java.sql.*;
-import java.sql.Date;
 
 public class Customer {
 
@@ -14,13 +13,9 @@ public class Customer {
 
     private Alertbox alertbox = new Alertbox();
 
-    //search customer account number
     public int getAccountNo(int accNo) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
-
+            establishConnection();
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
             int found = 0;
@@ -46,10 +41,7 @@ public class Customer {
 
     public int loginCustomer(int accNo, String passcode) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
-
+            establishConnection();
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
             int found = 0;
@@ -77,10 +69,7 @@ public class Customer {
         String profile = "";
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
-
+            establishConnection();
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
             int found = 0;
@@ -115,15 +104,14 @@ public class Customer {
 
     public void editCustomerProfile(int accNo, String newData, String choice) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
+            establishConnection();
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
             while (resultSet.next()) {
                 if (accNo == resultSet.getInt("account_no")) {
 
-                    if ("Name".equals(choice) || "Password".equals(choice) || "Sex".equals(choice) || "Email".equals(choice)) {
+                    if ("Name".equals(choice) || "Password".equals(choice) || "Sex".equals(choice)
+                            || "Email".equals(choice)) {
 
                         String updateQuery = "UPDATE customer SET " + choice.toLowerCase() + "=? WHERE account_no=?";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -142,11 +130,7 @@ public class Customer {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                    } else {
-                        String alert = "Incorrect Choice";
-                        alertbox.alertWarnning(alert);
                     }
-                    break;
                 }
             }
 
@@ -161,9 +145,7 @@ public class Customer {
         String balance = "";
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
+            establishConnection();
 
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
@@ -189,11 +171,10 @@ public class Customer {
     }
 
     public void addCustomer(int ID, String NAME, String PASSWORD, String ADDRESS, double BALANCE, String SEX,
-                            String EMAIL) {
+            String EMAIL) {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
+            establishConnection();
 
             String insertSQL = "INSERT INTO customer (id, name, password, address, balance, sex, join_date, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -210,10 +191,10 @@ public class Customer {
                 int rowsAffected = preparedStatement.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    String alert = "Data updated successfully.";
+                    String alert = "Customer Added successfully.";
                     alertbox.alertConfirm(alert);
                 } else {
-                    String alert = "No data updated. Account Number not found.";
+                    String alert = "Customer Add Failed";
                     alertbox.alertError(alert);
                 }
             } catch (SQLException e) {
@@ -227,12 +208,37 @@ public class Customer {
         }
     }
 
+    public double capital() {
+        double balance = 0;
+
+        try {
+            establishConnection();
+
+            resultSet = statement.executeQuery("SELECT * FROM customer");
+
+            int found = 0;
+            while (resultSet.next()) {
+                balance += resultSet.getDouble("balance");
+                found++;
+            }
+
+            if (found == 0) {
+                String alert = "Account Number not found";
+                alertbox.alertError(alert);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return balance;
+    }
+
     public void logoutCustomer(int account_no) {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
+            establishConnection();
 
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
@@ -242,6 +248,7 @@ public class Customer {
                     String deleteSQL = "DELETE FROM customer WHERE account_no = ?";
                     try (PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
                         preparedStatement.setInt(1, account_no);
+                        preparedStatement.executeUpdate();
 
                         found++;
 
@@ -250,10 +257,16 @@ public class Customer {
                     }
                 }
 
-                if (found == 0) {
-                    String alert = "Account Number not found";
-                    alertbox.alertError(alert);
-                }
+            }
+
+            if (found == 0) {
+                String alert = "Account Number not found";
+                alertbox.alertError(alert);
+            }
+
+            else {
+                String alert = "Deleted Successfully";
+                alertbox.alertConfirm(alert);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,13 +275,23 @@ public class Customer {
         }
     }
 
+    private void establishConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection = DriverManager.getConnection(url, username, password);
+        statement = connection.createStatement();
+    }
+
     private void closeResources() {
         try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
+            if (resultSet != null)
+                resultSet.close();
+            if (statement != null)
+                statement.close();
+            if (connection != null)
+                connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

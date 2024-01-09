@@ -11,7 +11,6 @@ public class Employee {
 
     // class
     Alertbox alertbox = new Alertbox();
-    Login login = new Login();
 
     public String seeEmployeeProfile(int ID) {
         String profile = "";

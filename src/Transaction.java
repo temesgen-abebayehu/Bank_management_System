@@ -17,14 +17,7 @@ public class Transaction {
     public void dipositMoney(int accNo, double bala) {
 
         try {
-            // Load the JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Establish a connection to the database
-            connection = DriverManager.getConnection(url, username, password);
-
-            // Create a statement for executing SQL queries
-            statement = connection.createStatement();
+            establishConnection();
 
             // Execute a SQL query and get the result set
             resultSet = statement.executeQuery("SELECT * FROM customer");
@@ -39,6 +32,7 @@ public class Transaction {
                         bala += resultSet.getDouble("balance");
                         preparedStatement.setDouble(1, bala);
                         preparedStatement.setInt(2, accNo);
+                        preparedStatement.executeUpdate();
 
                         found++;
                     } catch (SQLException e) {
@@ -60,18 +54,14 @@ public class Transaction {
         } catch (Exception e) {
             e.toString();
         }
+        finally {
+            closeResources();
+        }
     }
 
     public void withdrawMoney(int accNo, double bala, String passcode) {
         try {
-            // Load the JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Establish a connection to the database
-            connection = DriverManager.getConnection(url, username, password);
-
-            // Create a statement for executing SQL queries
-            statement = connection.createStatement();
+            establishConnection();
 
             // Execute a SQL query and get the result set
             resultSet = statement.executeQuery("SELECT * FROM customer");
@@ -87,6 +77,7 @@ public class Transaction {
                             bala = resultSet.getDouble("balance") - bala;
                             preparedStatement.setDouble(1, bala);
                             preparedStatement.setInt(2, accNo);
+                            preparedStatement.executeUpdate();
 
                             found++;
                         } catch (SQLException e) {
@@ -112,18 +103,14 @@ public class Transaction {
         } catch (Exception e) {
             e.toString();
         }
+        finally {
+            closeResources();
+        }
     }
 
     public void transferMoney(int accNo, double bala, String passcode, int reciverNO) {
         try {
-            // Load the JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Establish a connection to the database
-            connection = DriverManager.getConnection(url, username, password);
-
-            // Create a statement for executing SQL queries
-            statement = connection.createStatement();
+            establishConnection();
 
             // Execute a SQL query and get the result set
             resultSet = statement.executeQuery("SELECT * FROM customer");
@@ -147,6 +134,7 @@ public class Transaction {
                                 double senderBala = resultSet.getDouble("balance") - bala;
                                 preparedStatement.setDouble(1, senderBala);
                                 preparedStatement.setInt(2, accNo);
+                                preparedStatement.executeUpdate();
 
                                 found++;
                             } catch (SQLException e) {
@@ -174,13 +162,14 @@ public class Transaction {
             else {
                 while (resultSet.next()) {
                     String updateQuery = "UPDATE customer SET balance=? WHERE account_no=?";
-                            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-                                double recinerBal  = resultSet.getDouble("balance") + bala;
-                                preparedStatement.setDouble(1, recinerBal);
-                                preparedStatement.setInt(2, reciverNO);
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                        double recinerBal = resultSet.getDouble("balance") + bala;
+                        preparedStatement.setDouble(1, recinerBal);
+                        preparedStatement.setInt(2, reciverNO);
+                        preparedStatement.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
                 String alert = "Transfer successfully";
                 alertbox.alertConfirm(alert);
@@ -188,6 +177,26 @@ public class Transaction {
 
         } catch (Exception e) {
             e.toString();
+        }
+        
+    }
+    
+    private void establishConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection = DriverManager.getConnection(url, username, password);
+        statement = connection.createStatement();
+    }
+
+    private void closeResources() {
+        try {
+            if (resultSet != null)
+                resultSet.close();
+            if (statement != null)
+                statement.close();
+            if (connection != null)
+                connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

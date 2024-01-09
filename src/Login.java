@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -30,8 +29,8 @@ public class Login {
     HBox sexBox = new HBox();
 
     // control fild
-    Button sumiButton = new Button();
-    Button clearButton = new Button();
+    Button sumiButton = new Button("Semmit");
+    Button clearButton = new Button("Clear");
 
     Label idLabel = new Label();
     TextField idField = new TextField();
@@ -51,9 +50,6 @@ public class Login {
     Label recivLabel = new Label();
     TextField recivField = new TextField();
 
-    // sex
-    RadioButton male = new RadioButton();
-
     // class
     Transaction transaction = new Transaction();
     Customer customer = new Customer();
@@ -63,13 +59,13 @@ public class Login {
 
         Stage window = new Stage();
 
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Login");
+        //window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Withdraw Page");
         window.setMinHeight(400);
         window.setMinWidth(400);
 
         accountLabel.setText("Enter Account Number: ");
-        balanceLabel.setText("Enter Amoun:  ");
+        balanceLabel.setText("Enter Amoun:   ");
         passwordLabel.setText("Enter Your Password: ");
 
         // set box
@@ -81,11 +77,9 @@ public class Login {
         passwordBox.setSpacing(10);
 
         // buttun
-        sumiButton.setText("Summit");
         sumiButton.setPadding(new Insets(15, 15, 15, 15));
-        sumiButton.setStyle("-fx-background-color: yellowish;");
+        sumiButton.setStyle("-fx-background-color: YELLOW;");
 
-        clearButton.setText("Clear");
         clearButton.setPadding(new Insets(15, 15, 15, 15));
 
         buttonBox.getChildren().addAll(sumiButton, clearButton);
@@ -93,7 +87,7 @@ public class Login {
         // box conteiner
         vBox.getChildren().addAll(acountBox, balanceBox, passwordBox, buttonBox);
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-background-color: grey;");
+        vBox.setStyle("-fx-background-color: GRAY;");
         vBox.setPadding(new Insets(10, 10, 10, 10));
 
         sumiButton.setOnAction(e -> {
@@ -114,7 +108,7 @@ public class Login {
 
         BorderPane layout = new BorderPane();
         layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: lightbrown;");
+        layout.setStyle("-fx-background-color: LIGHTGRAY;");
         layout.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(layout);
@@ -126,7 +120,7 @@ public class Login {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Login");
+        window.setTitle("Transfer Page");
         window.setMinHeight(400);
         window.setMinWidth(400);
 
@@ -156,7 +150,7 @@ public class Login {
         // box conteiner
         vBox.getChildren().addAll(acountBox, balanceBox, passwordBox, recivBox, buttonBox);
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-background-color: grey;");
+        vBox.setStyle("-fx-background-color: GRAY;");
         vBox.setPadding(new Insets(10, 10, 10, 10));
 
         sumiButton.setOnAction(e -> {
@@ -179,7 +173,7 @@ public class Login {
 
         BorderPane layout = new BorderPane();
         layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: lightbrown;");
+        layout.setStyle("-fx-background-color: LIGHTGRAY;");
         layout.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(layout);
@@ -191,7 +185,7 @@ public class Login {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Login");
+        window.setTitle("Deposit Page");
         window.setMinHeight(400);
         window.setMinWidth(400);
 
@@ -216,7 +210,7 @@ public class Login {
         // box conteiner
         vBox.getChildren().addAll(acountBox, balanceBox, buttonBox);
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-background-color: grey;");
+        vBox.setStyle("-fx-background-color: BROWN;");
         vBox.setPadding(new Insets(10, 10, 10, 10));
 
         sumiButton.setOnAction(e -> {
@@ -235,7 +229,7 @@ public class Login {
 
         BorderPane layout = new BorderPane();
         layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: lightbrown;");
+        layout.setStyle("-fx-background-color: MAGENTA;");
         layout.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(layout);
@@ -275,7 +269,7 @@ public class Login {
         // box conteiner
         vBox.getChildren().addAll(acountBox, passwordBox, buttonBox);
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-background-color: grey;");
+        vBox.setStyle("-fx-background-color: GRAY;");
         vBox.setPadding(new Insets(10, 10, 10, 10));
 
         sumiButton.setOnAction(e -> {
@@ -292,7 +286,7 @@ public class Login {
 
         BorderPane layout = new BorderPane();
         layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: lightbrown;");
+        layout.setStyle("-fx-background-color: rgb(128, 200, 255);");
         layout.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(layout, 700, 500);
@@ -303,54 +297,48 @@ public class Login {
     }
 
     static String updateChoice;
-
-    public String updateButtone() {
+     public String updateButton() {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Login");
+        window.setTitle("Update Page");
         window.setMinHeight(400);
         window.setMinWidth(400);
 
-        // buttun
+        // button
         Button nameButton = new Button("Update Name");
         Button passwordButton = new Button("Update Password");
         Button sexButton = new Button("Update Sex");
         Button emailButton = new Button("Update Email");
-        sumiButton.setText("OK");
 
         nameButton.setOnAction(e -> {
             updateChoice = "Name";
+            window.close();
         });
-
         passwordButton.setOnAction(e -> {
             updateChoice = "Password";
+            window.close();
         });
-
         sexButton.setOnAction(e -> {
             updateChoice = "Sex";
+            window.close();
         });
-
         emailButton.setOnAction(e -> {
             updateChoice = "Email";
-        });
-
-        // submmit button
-        sumiButton.setOnAction(e -> {
             window.close();
         });
 
-        // box conteiner
-        vBox.getChildren().addAll(nameButton, passwordButton, sexButton, emailButton, sumiButton);
-        vBox.setSpacing(10);
+
+        // box container
+        VBox vBox = new VBox(10, nameButton, passwordButton, sexButton, emailButton);
         vBox.setAlignment(Pos.CENTER_LEFT);
-        vBox.setStyle("-fx-background-color: grey;");
-        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setStyle("-fx-background-color: GRAY;");
+        vBox.setPadding(new Insets(10));
 
         BorderPane layout = new BorderPane();
         layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: lightbrown;");
-        layout.setPadding(new Insets(10, 10, 10, 10));
+        layout.setStyle("-fx-background-color: CYAN;");
+        layout.setPadding(new Insets(10));
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
@@ -360,17 +348,20 @@ public class Login {
     }
 
     static String newData;
+
     public String acceptNewdata(String choice) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Upadte Page");
-        window.setMinHeight(400);
-        window.setMinWidth(200);
+        window.setTitle("Input Data Page");
+        window.setMinHeight(300);
+        window.setMinWidth(400);
 
         nameLabel.setText("Enter " + choice + " : ");
+        sumiButton.setText("Summit");
+        clearButton.setText("Clear");
 
-        //summit and reset
+        // summit and reset
         sumiButton.setOnAction(e -> {
             newData = nameTextField.getText();
             window.close();
@@ -380,19 +371,22 @@ public class Login {
             nameTextField.setText("");
         });
 
-        nameBox.getChildren().addAll(sumiButton, clearButton);
-        nameBox.setPadding(new Insets(10));
+        nameBox.getChildren().addAll(nameLabel, nameTextField);
+
+        buttonBox.getChildren().addAll(sumiButton, clearButton);
+        buttonBox.setPadding(new Insets(10));
+        buttonBox.setSpacing(10);
 
         // box conteiner
-        vBox.getChildren().addAll(nameLabel, nameTextField,nameBox);
+        vBox.getChildren().addAll(nameBox, buttonBox);
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER_RIGHT);
-        vBox.setStyle("-fx-background-color: grey;");
+        vBox.setStyle("-fx-background-color: GRAY;");
         vBox.setPadding(new Insets(10, 10, 10, 10));
 
         BorderPane layout = new BorderPane();
         layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: lightbrown;");
+        layout.setStyle("-fx-background-color: CYAN;");
         layout.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(layout);
@@ -408,9 +402,9 @@ public class Login {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Upadte Page");
-        window.setMinHeight(400);
-        window.setMinWidth(500);
+        window.setTitle("Add New Custemer");
+        window.setMinHeight(500);
+        window.setMinWidth(400);
 
         // input fild
         idLabel.setText("Enter ID: ");
@@ -421,7 +415,7 @@ public class Login {
         emaiLabel.setText("Enter Email: ");
 
         ComboBox<String> genderComboBox = new ComboBox<>();
-        genderComboBox.getItems().addAll("Male", "Female", "Other");
+        genderComboBox.getItems().addAll("M", "F", "Other");
 
         // Handle ComboBox selection changes
         genderComboBox.setOnAction(e -> {
@@ -456,6 +450,82 @@ public class Login {
         passwordBox.getChildren().addAll(passwordLabel, passwordTextField);
         addresBox.getChildren().addAll(addresLabel, addresField);
         balanceBox.getChildren().addAll(balanceLabel, balanceTextField);
+        emailBox.getChildren().addAll(emaiLabel, emailField);
+        sexBox.getChildren().addAll(genderComboBox);
+        sexBox.setPadding(new Insets(15));
+        sexBox.setAlignment(Pos.CENTER);
+        buttonBox.getChildren().addAll(sumiButton, clearButton);
+
+        // box conteiner
+        vBox.getChildren().addAll(idBox, nameBox, passwordBox, addresBox, balanceBox, sexBox, emailBox, buttonBox);
+        vBox.setSpacing(10);
+        vBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.setStyle("-fx-background-color: PURPLE;");
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+
+        Scene scene = new Scene(vBox);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
+    static String role;
+
+    public void writeEmployee() {
+        Stage window = new Stage();
+
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Add New Employee");
+        window.setMinHeight(400);
+        window.setMinWidth(400);
+
+        // input fild
+        idLabel.setText("Enter ID: ");
+        nameLabel.setText("Enter Name: ");
+        passwordLabel.setText("Enter Password: ");
+        addresLabel.setText("Enter Address: ");
+        emaiLabel.setText("Enter Email: ");
+
+        ComboBox<String> genderComboBox = new ComboBox<>();
+        genderComboBox.getItems().addAll("Male", "Female", "Other");
+
+        ComboBox<String> roleComboBox = new ComboBox<>();
+        roleComboBox.getItems().addAll("WORKER", "MANAGER", "ADMINISTRATOR");
+
+        // Handle ComboBox selection changes
+        genderComboBox.setOnAction(e -> {
+            gender = genderComboBox.getValue();
+        });
+
+        roleComboBox.setOnAction(e -> {
+            role = genderComboBox.getValue();
+        });
+
+        // call addcustomer method
+        sumiButton.setOnAction(e -> {
+            int id = Integer.parseInt(idField.getText());
+            String name = nameTextField.getText();
+            String password = passwordTextField.getText();
+            String address = addresField.getText();
+            String email = emailField.getText();
+
+            employee.addEmployee(id, name, password, address, role, gender, email);
+            window.close();
+        });
+
+        clearButton.setOnAction(e -> {
+            idField.setText("");
+            nameTextField.setText("");
+            passwordTextField.setText("");
+            addresLabel.setText("");
+            emailField.setText("");
+        });
+
+        // set input fild
+        idBox.getChildren().addAll(idLabel, idField);
+        nameBox.getChildren().addAll(nameLabel, nameTextField);
+        passwordBox.getChildren().addAll(passwordLabel, passwordTextField);
+        addresBox.getChildren().addAll(addresLabel, addresField);
+        balanceBox.getChildren().addAll(roleComboBox);
         emailBox.getChildren().addAll(emaiLabel, emailField);
         sexBox.getChildren().addAll(genderComboBox);
         sexBox.setPadding(new Insets(15));
