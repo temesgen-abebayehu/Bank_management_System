@@ -10,8 +10,7 @@ public class Alertbox {
         Alert alert = new Alert(AlertType.CONFIRMATION);
 
         alert.setTitle("Information Dialog");
-        alert.setHeaderText("This is the header text");
-        alert.setContentText(message);
+        alert.setHeaderText(message);
 
         // Show the alert
         alert.showAndWait();
@@ -25,8 +24,7 @@ public class Alertbox {
         Alert alert = new Alert(AlertType.ERROR);
 
         alert.setTitle("Error Dialog");
-        alert.setHeaderText("This is the header text");
-        alert.setContentText(message);
+        alert.setHeaderText(message);
 
         // Show the alert
         alert.showAndWait();
@@ -40,8 +38,7 @@ public class Alertbox {
         Alert alert = new Alert(AlertType.WARNING);
 
         alert.setTitle("Warning Dialog");
-        alert.setHeaderText("This is the header text");
-        alert.setContentText(message);
+        alert.setHeaderText(message);
 
         // Show the alert
         alert.showAndWait();
@@ -62,14 +59,29 @@ public class Alertbox {
                 "6. Tsiyon Gashaw\tETS 1588/14\n" +
 
                 "\n\n\tSubmitted to: Ms. Fuad yimer" +
-                "\n\tSubmission date: Nov 18/2023"+
+                "\n\tSubmission date: Nov 18/2023" +
                 "\n***************************************************\n";
 
         Stage primaryStage = new Stage();
-        Alert alert = new Alert(AlertType.WARNING);
+        Alert alert = new Alert(AlertType.INFORMATION);
 
         alert.setTitle("Warning Dialog");
-        alert.setHeaderText("This is the header text");
+        alert.setContentText(message);
+
+        // Show the alert
+        alert.showAndWait();
+
+        // Close the application
+        primaryStage.close();
+    }
+    
+    public void viewProfile(String message) {
+        
+
+        Stage primaryStage = new Stage();
+        Alert alert = new Alert(AlertType.INFORMATION);
+
+        alert.setTitle("Information Dialog");
         alert.setContentText(message);
 
         // Show the alert
