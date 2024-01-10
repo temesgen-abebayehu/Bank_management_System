@@ -12,6 +12,33 @@ public class Employee {
     // class
     Alertbox alertbox = new Alertbox();
 
+    public int loginEmployee(int ID, String passcode) {
+        try {
+            connectToDatabase();
+            resultSet = statement.executeQuery("SELECT * FROM employee");
+
+            int found = 0;
+            while (resultSet.next()) {
+                if (ID == resultSet.getInt("id") && passcode.equals(resultSet.getString("password"))) {
+                    found++;
+                }
+            }
+
+            if (found == 0) {
+                ID = -1;
+                String alert = "Account Number not found";
+                alertbox.alertError(alert);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return ID;
+    }
+
     public String seeEmployeeProfile(int ID) {
         String profile = "";
 
@@ -26,7 +53,7 @@ public class Employee {
                     profile = "\n----------------------------------\n" +
                             "\tID: " + resultSet.getInt("id") + "\n\tName: " + resultSet.getString("name") +
                             "\n\tAddress: " + resultSet.getString("address") + "\n\tRoles: " +
-                            resultSet.getString("role") + "\n\tSex: " + resultSet.getString("sex") +
+                            resultSet.getString("roles") + "\n\tSex: " + resultSet.getString("sex") +
                             "\n\tJoin Date: " + resultSet.getDate("join_date") + "\n\tContact Email: " +
                             resultSet.getString("email") +
                             "\n-------------------------------------\n";
@@ -103,7 +130,7 @@ public class Employee {
             connectToDatabase();
 
             // Define the INSERT SQL statement with placeholders (?)
-            String insertSQL = "INSERT INTO employee (id,name,password, address, role, sex,join_date, email) VALUES (?, ?, ?, ?,?,?,?,?)";
+            String insertSQL = "INSERT INTO employee (id,name,password, address, roles, sex,join_date, email) VALUES (?, ?, ?, ?,?,?,?,?)";
 
             // Create a PreparedStatement to avoid SQL injection
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -198,8 +225,5 @@ public class Employee {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void editCustomerProfile(int id, String newData, String choiceButtone) {
     }
 }

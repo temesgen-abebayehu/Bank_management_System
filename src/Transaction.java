@@ -11,7 +11,7 @@ public class Transaction {
     Statement statement = null;
     ResultSet resultSet = null;
 
-    //class
+    // class
     Alertbox alertbox = new Alertbox();
 
     public void dipositMoney(int accNo, double bala) {
@@ -53,13 +53,12 @@ public class Transaction {
 
         } catch (Exception e) {
             e.toString();
-        }
-        finally {
+        } finally {
             closeResources();
         }
     }
 
-    public void withdrawMoney(int accNo, double bala, String passcode) {
+    public void withdrawMoney(int accNo, double bala) {
         try {
             establishConnection();
 
@@ -70,7 +69,7 @@ public class Transaction {
             int found = 0;
             while (resultSet.next()) {
 
-                if (accNo == resultSet.getInt("account_no") && passcode == resultSet.getString("password")) {
+                if (accNo == resultSet.getInt("account_no")) {
                     if (resultSet.getDouble("balance") > bala) {
                         String updateQuery = "UPDATE customer SET balance=? WHERE account_no=?";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -102,85 +101,79 @@ public class Transaction {
 
         } catch (Exception e) {
             e.toString();
-        }
-        finally {
+        } finally {
             closeResources();
         }
     }
 
-    public void transferMoney(int accNo, double bala, String passcode, int reciverNO) {
-        try {
-            establishConnection();
+public void transferMoney(int senderAccountNo, double amount, int receiverAccountNo) {
+    try {
+        establishConnection();
 
-            // Execute a SQL query and get the result set
-            resultSet = statement.executeQuery("SELECT * FROM customer");
+        // Check sender's balance and ID
+        double senderBalance = 0;
+        int senderID = -1;
+        resultSet = statement.executeQuery("SELECT * FROM customer");
 
-            // check the account number and password
-            int found = 0;
-            boolean getAccount = false;
-            while (resultSet.next()) {
-
-                if (accNo == resultSet.getInt("account_no") && passcode == resultSet.getString("password")) {
-                    if (resultSet.getDouble("balance") > bala) {
-                        while (resultSet.next()) {
-                            if (reciverNO == resultSet.getDouble("account_no")) {
-                                getAccount = true;
-                                break;
-                            }
-                        }
-                        if (getAccount == true) {
-                            String updateQuery = "UPDATE customer SET balance=? WHERE account_no=?";
-                            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-                                double senderBala = resultSet.getDouble("balance") - bala;
-                                preparedStatement.setDouble(1, senderBala);
-                                preparedStatement.setInt(2, accNo);
-                                preparedStatement.executeUpdate();
-
-                                found++;
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        else {
-                            String alert = "Reciver Account number not found";
-                            alertbox.alertWarnning(alert);
-                            return;
-                        }
-                    } else {
-                        String alert = "Your balance is low";
-                        alertbox.alertWarnning(alert);
-                        return;
-                    }
-                }
+        while (resultSet.next()) {
+            if (senderAccountNo == resultSet.getInt("account_no")) {
+                senderID = resultSet.getInt("id");
+                senderBalance = resultSet.getDouble("balance");
+                break;
             }
-            if (found == 0) {
-                String alert = "Account Number not found";
-                alertbox.alertError(alert);
-            }
-
-            else {
-                while (resultSet.next()) {
-                    String updateQuery = "UPDATE customer SET balance=? WHERE account_no=?";
-                    try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-                        double recinerBal = resultSet.getDouble("balance") + bala;
-                        preparedStatement.setDouble(1, recinerBal);
-                        preparedStatement.setInt(2, reciverNO);
-                        preparedStatement.executeUpdate();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                String alert = "Transfer successfully";
-                alertbox.alertConfirm(alert);
-            }
-
-        } catch (Exception e) {
-            e.toString();
         }
-        
+
+        if (senderID == -1 || senderBalance < amount) {
+            String alert = (senderID == -1) ? "Sender Account Number not found" : "Insufficient balance";
+            alertbox.alertWarnning(alert);
+            return;
+        }
+
+        // Check if receiver exists
+        resultSet = statement.executeQuery("SELECT * FROM customer");
+        int receiverID = -1;
+        double receiverBalance = 0;
+
+        while (resultSet.next()) {
+            if (receiverAccountNo == resultSet.getInt("account_no")) {
+                receiverID = resultSet.getInt("id");
+                receiverBalance = resultSet.getDouble("balance");
+                break;
+            }
+        }
+
+        if (receiverID == -1) {
+            alertbox.alertError("Receiver Account Number not found");
+            return;
+        }
+
+        // Update sender's balance
+        updateBalance(senderID, senderBalance - amount, senderAccountNo);
+
+        // Update receiver's balance
+        updateBalance(receiverID, receiverBalance + amount, receiverAccountNo);
+
+        alertbox.alertConfirm("Transfer successful");
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        closeResources();
     }
-    
+}
+
+private void updateBalance(int customerID, double newBalance, int accountNo) throws SQLException {
+    String updateQuery = "UPDATE customer SET balance=? WHERE id=? AND account_no=?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+        preparedStatement.setDouble(1, newBalance);
+        preparedStatement.setInt(2, customerID);
+        preparedStatement.setInt(3, accountNo);
+        preparedStatement.executeUpdate();
+    }
+}
+
+
+
     private void establishConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(url, username, password);
