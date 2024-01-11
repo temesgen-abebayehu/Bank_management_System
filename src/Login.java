@@ -14,42 +14,6 @@ import javafx.stage.Stage;
 
 public class Login {
 
-    // box filed
-    VBox vBox = new VBox();
-
-    HBox acountBox = new HBox();
-    HBox nameBox = new HBox();
-    HBox balanceBox = new HBox();
-    HBox passwordBox = new HBox();
-    HBox idBox = new HBox();
-    HBox buttonBox = new HBox();
-    HBox recivBox = new HBox();
-    HBox addresBox = new HBox();
-    HBox emailBox = new HBox();
-    HBox sexBox = new HBox();
-
-    // control fild
-    Button sumiButton = new Button("Semmit");
-    Button clearButton = new Button("Clear");
-
-    Label idLabel = new Label();
-    TextField idField = new TextField();
-    Label nameLabel = new Label();
-    TextField nameTextField = new TextField();
-    Label passwordLabel = new Label();
-    TextField passwordTextField = new TextField();
-    Label addresLabel = new Label();
-    TextField addresField = new TextField();
-    Label accountLabel = new Label();
-    TextField accounTextField = new TextField();
-    Label balanceLabel = new Label();
-    TextField balanceTextField = new TextField();
-    Label emaiLabel = new Label();
-    TextField emailField = new TextField();
-
-    Label recivLabel = new Label();
-    TextField recivField = new TextField();
-
     // class
     Transaction transaction = new Transaction();
     Customer customer = new Customer();
@@ -63,8 +27,20 @@ public class Login {
         window.setMinHeight(400);
         window.setMinWidth(400);
 
-        accountLabel.setText("Enter Account Number: ");
-        balanceLabel.setText("Enter Amoun:  ");
+        // box filed
+        VBox vBox = new VBox();
+
+        HBox acountBox = new HBox();
+        HBox balanceBox = new HBox();
+        HBox recivBox = new HBox();
+        HBox buttonBox = new HBox();
+
+        Label accountLabel = new Label("Enter Account Number: ");
+        TextField accounTextField = new TextField();
+        Label balanceLabel = new Label("Enter Amoun:  ");
+        TextField balanceTextField = new TextField();
+        Label recivLabel = new Label("Enter Reciver Acount No:  ");
+        TextField recivField = new TextField();
 
         // set box
         acountBox.getChildren().addAll(accountLabel, accounTextField);
@@ -74,10 +50,15 @@ public class Login {
         balanceBox.setSpacing(10);
         balanceBox.setAlignment(Pos.CENTER_RIGHT);
 
+        // control fild
+        Button sumiButton = new Button("Semmit");
+        sumiButton.setStyle("-fx-background-color:yellow");
+        Button clearButton = new Button("Clear");
+
         buttonBox.getChildren().addAll(sumiButton, clearButton);
+        buttonBox.setSpacing(15);
 
         if (message.equals("Transfer")) {
-            recivLabel.setText("Enter Reciver Acount No:  ");
             recivBox.getChildren().addAll(recivLabel, recivField);
             recivBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -150,8 +131,17 @@ public class Login {
         window.setMinHeight(400);
         window.setMinWidth(400);
 
-        accountLabel.setText(lable);
-        passwordLabel.setText("Enter Password:  ");
+        // box filed
+        VBox vBox = new VBox();
+
+        HBox buttonBox = new HBox();
+        HBox acountBox = new HBox();
+        HBox passwordBox = new HBox();
+
+        Label passwordLabel = new Label("Enter Password:  ");
+        TextField passwordTextField = new TextField();
+        Label accountLabel = new Label(lable);
+        TextField accounTextField = new TextField();
 
         // set box
         acountBox.getChildren().addAll(accountLabel, accounTextField);
@@ -160,14 +150,13 @@ public class Login {
         passwordBox.setSpacing(10);
 
         // buttun
-        sumiButton.setText("Summit");
-        sumiButton.setPadding(new Insets(10, 10, 10, 10));
+        Button sumiButton = new Button("Semmit");
+        Button clearButton = new Button("Clear");
+
         sumiButton.setStyle("-fx-background-color: yellow;");
 
-        clearButton.setText("Clear");
-        clearButton.setPadding(new Insets(10, 10, 10, 10));
-
         buttonBox.getChildren().addAll(sumiButton, clearButton);
+        buttonBox.setSpacing(15);
 
         // box conteiner
         vBox.getChildren().addAll(acountBox, passwordBox, buttonBox);
@@ -195,7 +184,7 @@ public class Login {
 
         clearButton.setOnAction(e -> {
             accounTextField.setText("");
-            balanceTextField.setText("");
+            passwordTextField.setText("");
         });
 
         BorderPane layout = new BorderPane();
@@ -210,57 +199,6 @@ public class Login {
         return identifire;
     }
 
-    static String updateChoice;
-
-    public String updateButton() {
-        Stage window = new Stage();
-
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Update Page");
-        window.setMinHeight(400);
-        window.setMinWidth(400);
-
-        // button
-        Button nameButton = new Button("Update Name");
-        Button passwordButton = new Button("Update Password");
-        Button sexButton = new Button("Update Sex");
-        Button emailButton = new Button("Update Email");
-
-        nameButton.setOnAction(e -> {
-            updateChoice = "Name";
-            window.close();
-        });
-        passwordButton.setOnAction(e -> {
-            updateChoice = "Password";
-            window.close();
-        });
-        sexButton.setOnAction(e -> {
-            updateChoice = "Sex";
-            window.close();
-        });
-        emailButton.setOnAction(e -> {
-            updateChoice = "Email";
-            window.close();
-        });
-
-        // box container
-        VBox vBox = new VBox(10, nameButton, passwordButton, sexButton, emailButton);
-        vBox.setAlignment(Pos.CENTER_LEFT);
-        vBox.setStyle("-fx-background-color: GRAY;");
-        vBox.setPadding(new Insets(10));
-
-        BorderPane layout = new BorderPane();
-        layout.setCenter(vBox);
-        layout.setStyle("-fx-background-color: CYAN;");
-        layout.setPadding(new Insets(10));
-
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
-        window.showAndWait();
-
-        return updateChoice;
-    }
-
     static String newData;
 
     public String acceptNewdata(String choice) {
@@ -271,7 +209,18 @@ public class Login {
         window.setMinHeight(300);
         window.setMinWidth(400);
 
-        nameLabel.setText("Enter " + choice + " : ");
+        // box filed
+        VBox vBox = new VBox();
+
+        HBox buttonBox = new HBox();
+        HBox nameBox = new HBox();
+
+        Label nameLabel = new Label("Enter " + choice + " : ");
+        TextField nameTextField = new TextField();
+
+        // control fild
+        Button sumiButton = new Button("Semmit");
+        Button clearButton = new Button("Clear");
 
         // summit and reset
         sumiButton.setOnAction(e -> {
@@ -318,13 +267,40 @@ public class Login {
         window.setMinHeight(500);
         window.setMinWidth(400);
 
+        // box filed
+        VBox vBox = new VBox();
+
+        HBox nameBox = new HBox();
+        HBox balanceBox = new HBox();
+        HBox passwordBox = new HBox();
+        HBox idBox = new HBox();
+        HBox buttonBox = new HBox();
+        HBox addresBox = new HBox();
+        HBox emailBox = new HBox();
+        HBox sexBox = new HBox();
+
         // input fild
-        idLabel.setText("Enter ID: ");
-        nameLabel.setText("Enter Name: ");
-        passwordLabel.setText("Enter Password: ");
-        addresLabel.setText("Enter Address: ");
-        balanceLabel.setText("Enter Initial Balance: ");
-        emaiLabel.setText("Enter Email: ");
+        Label idLabel = new Label("Enter ID: ");
+        TextField idField = new TextField();
+
+        Label nameLabel = new Label("Enter Name: ");
+        TextField nameTextField = new TextField();
+
+        Label passwordLabel = new Label("Enter Password: ");
+        TextField passwordTextField = new TextField();
+
+        Label addresLabel = new Label("Enter Address: ");
+        TextField addresField = new TextField();
+
+        Label balanceLabel = new Label("Enter Initial Balance: ");
+        TextField balanceTextField = new TextField();
+
+        Label emaiLabel = new Label("Enter Email: ");
+        TextField emailField = new TextField();
+
+        // control fild
+        Button sumiButton = new Button("Semmit");
+        Button clearButton = new Button("Clear");
 
         ComboBox<String> genderComboBox = new ComboBox<>();
         genderComboBox.getItems().addAll("M", "F");
@@ -346,7 +322,7 @@ public class Login {
                 double balance = Double.parseDouble(balanceTextField.getText());
                 String email = emailField.getText();
 
-                customer.addCustomer(id, name, password, address, balance, gender, email);
+                customer.addCustomer(id, name, password, address, balance,email, gender);
                 window.close();
             });
 
@@ -412,7 +388,7 @@ public class Login {
         vBox.getChildren().addAll(idBox, nameBox, passwordBox, addresBox, balanceBox, sexBox, emailBox, buttonBox);
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER_LEFT);
-        vBox.setStyle("-fx-background-color: PURPLE;");
+        vBox.setStyle("-fx-background-color: lightblue;");
         vBox.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(vBox);

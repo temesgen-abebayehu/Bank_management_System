@@ -65,7 +65,7 @@ public class Alertbox {
         Stage primaryStage = new Stage();
         Alert alert = new Alert(AlertType.INFORMATION);
 
-        alert.setTitle("Warning Dialog");
+        alert.setTitle("Information Dialog");
         alert.setContentText(message);
 
         // Show the alert

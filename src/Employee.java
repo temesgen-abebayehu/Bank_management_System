@@ -26,7 +26,7 @@ public class Employee {
 
             if (found == 0) {
                 ID = -1;
-                String alert = "Account Number not found";
+                String alert = "ID number not found";
                 alertbox.alertError(alert);
             }
 

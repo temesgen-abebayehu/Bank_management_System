@@ -180,32 +180,32 @@ public class Main extends Application {
                 submitButton.setOnAction(e -> {
                     String newdata = newField.getText();
                     customer.editCustomerProfile(id, newdata, updateChoice);
-                    newField.clear(); // Clear the text field after submitting
+                    newField.clear(); 
                 });
 
-                VBox vBox = new VBox(); // Create a new VBox
-                vBox.getChildren().addAll(newLabel, newField, updateComboBox, submitButton); // Add all the elements to
-                                                                                             // the VBox
-                vBox.setSpacing(10); // Set spacing between elements
-                vBox.setPadding(new Insets(10)); // Set padding for the VBox
+                VBox vBox = new VBox(); 
+                vBox.getChildren().addAll(newLabel, newField, updateComboBox, submitButton); 
+                vBox.setSpacing(10);
+                vBox.setPadding(new Insets(10)); 
 
                 // Update the existing VBox with the new content
-                vBox.getChildren().clear(); // Clear the existing content
-                vBox.getChildren().addAll(newLabel, newField, updateComboBox, submitButton); // Add the updated content
+                vBox.getChildren().clear();
+                vBox.getChildren().addAll(newLabel, newField, updateComboBox, submitButton); 
 
                 // Set the updated VBox as the center of the layout
                 BorderPane layout = new BorderPane();
                 layout.setCenter(vBox);
 
-                Scene scene = new Scene(layout, 400, 300); // Create a new scene with the updated layout
-                window.setScene(scene); // Set the scene to the window
+                Scene scene = new Scene(layout, 400, 300); 
+                window.setScene(scene);
+               window.close();
             });
 
             // logout
             button6.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all your information!!!");
                 customer.logoutCustomer(id);
-                window.close();
+               window.close();
             });
 
             vBox.setAlignment(Pos.CENTER_LEFT);

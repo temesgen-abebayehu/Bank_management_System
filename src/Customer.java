@@ -52,6 +52,7 @@ public class Customer {
             }
 
             if (found == 0) {
+                accNo=-1;
                 String alert = "Account Number not found";
                 alertbox.alertError(alert);
             }
