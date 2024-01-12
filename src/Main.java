@@ -24,8 +24,6 @@ public class Main extends Application {
     Button aboutMenu = new Button("_About Us");
     Button helpMenu = new Button("_Help");
 
-    VBox vBox = new VBox();
-
     // control fild
     Button button1 = new Button();
     Button button2 = new Button();
@@ -35,8 +33,6 @@ public class Main extends Application {
     Button button6 = new Button();
     Button button7 = new Button();
     Label choice = new Label();
-    Label newLabel = new Label();
-    TextField newField = new TextField();
 
     // Class
     Login login = new Login();
@@ -95,8 +91,9 @@ public class Main extends Application {
         // top menu bar and all operation perform on it
         HBox menuBar = new HBox();
         menuBar.getChildren().addAll(userMenu, workerButton, adminButton, aboutMenu, helpMenu);
-        menuBar.setStyle("-fx-background-color: lightblue;");
+        menuBar.setStyle("-fx-background-color: rgb(100,100,100);");
         menuBar.setSpacing(15);
+        menuBar.setPadding(new Insets(10));
 
         // Wellcome message
         Label wellcome = new Label("\t\tWELLCOME To \nBank Management System");
@@ -124,9 +121,12 @@ public class Main extends Application {
         window.setMinHeight(400);
         window.setMinWidth(350);
 
-        choice.setText("Select From The List");
+        VBox vBox = new VBox();
+
+        Label choice = new Label("Select From The List");
         choice.setFont(Font.font("Times", FontWeight.BLACK, 20));
         choice.setPadding(new Insets(15, 10, 20, 10));
+        choice.setTextFill(Color.GOLD);
 
         if (measege.equals("User")) {
             // button list
@@ -143,73 +143,42 @@ public class Main extends Application {
             // Action listner
             // Withdraw money
             button1.setOnAction(ex -> {
-                login.inputTransaction("Withdraw");
-                window.close();
+                login.inputTransaction("Withdraw", id);
+                // window.close();
             });
 
             // Transfer money
             button2.setOnAction(ex -> {
-                login.inputTransaction("Transfer");
-                window.close();
+                login.inputTransaction("Transfer", id);
+                // window.close();
             });
 
             // view Profile
             button3.setOnAction(ex -> {
                 String profile = customer.seeCustomerProfile(id);
                 alertbox.viewProfile(profile);
-                window.close();
+                // window.close();
             });
 
             // check balance
             button4.setOnAction(ex -> {
                 String balanceInfo = customer.checkBalance(id);
                 alertbox.viewProfile(balanceInfo);
-                window.close();
+                // window.close();
             });
 
             // update profile
             button5.setOnAction(ex -> {
-                newLabel.setText("Enter New Data: ");
-                ComboBox<String> updateComboBox = new ComboBox<>();
-                updateComboBox.getItems().addAll("Name", "Sex", "Password", "Email");
-                updateComboBox.setOnAction(e -> {
-                    updateChoice = updateComboBox.getValue();
-                });
-
-                Button submitButton = new Button("Submit");
-                submitButton.setOnAction(e -> {
-                    String newdata = newField.getText();
-                    customer.editCustomerProfile(id, newdata, updateChoice);
-                    newField.clear(); 
-                });
-
-                VBox vBox = new VBox(); 
-                vBox.getChildren().addAll(newLabel, newField, updateComboBox, submitButton); 
-                vBox.setSpacing(10);
-                vBox.setPadding(new Insets(10)); 
-
-                // Update the existing VBox with the new content
-                vBox.getChildren().clear();
-                vBox.getChildren().addAll(newLabel, newField, updateComboBox, submitButton); 
-
-                // Set the updated VBox as the center of the layout
-                BorderPane layout = new BorderPane();
-                layout.setCenter(vBox);
-
-                Scene scene = new Scene(layout, 400, 300); 
-                window.setScene(scene);
-               window.close();
+                updateProfile(measege, id);
+                // window.close();
             });
 
             // logout
             button6.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all your information!!!");
                 customer.logoutCustomer(id);
-               window.close();
+                // window.close();
             });
-
-            vBox.setAlignment(Pos.CENTER_LEFT);
-            vBox.setSpacing(10);
         }
 
         else if (measege.equals("Worker")) {
@@ -227,24 +196,27 @@ public class Main extends Application {
             // Action listner
             // Deposit money
             button1.setOnAction(ex -> {
-                login.inputTransaction("Deposit");
-                window.close();
+                login.inputTransaction("Deposit", id);
+                // window.close();
             });
 
             // Add customer
             button2.setOnAction(ex -> {
                 login.addNewdata("Customer");
-                window.close();
+                // window.close();
             });
 
             // delete customer
             button3.setOnAction(ex -> {
                 int accNo;
                 String inputLable = "Account Number ";
-                inputLable = login.acceptNewdata(inputLable);
-                accNo = Integer.parseInt(inputLable);
+                String accountString = login.acceptNewdata(inputLable);
+                if (accountString.equals("")) {
+                    accountString = "0";
+                }
+                accNo = Integer.parseInt(accountString);
                 customer.logoutCustomer(accNo);
-                window.close();
+                // window.close();
             });
 
             // searchCustomer
@@ -252,134 +224,17 @@ public class Main extends Application {
                 int accNo;
                 String inputLable = "Account Number ";
                 inputLable = login.acceptNewdata(inputLable);
+                if (inputLable.equals(""))
+                    inputLable = "0";
                 accNo = Integer.parseInt(inputLable);
                 inputLable = customer.seeCustomerProfile(accNo);
                 alertbox.viewProfile(inputLable);
-                window.close();
+                // window.close();
             });
 
             // update profile
             button5.setOnAction(ex -> {
-                // String inputLable = "ID Number ";
-                // String idInput = login.acceptNewdata(inputLable);
-                // id = Integer.parseInt(idInput); // change string to int
-                // // display update choice
-                // String choiceButtone = login.updateButton();
-
-                // // accept new data
-                // inputLable = "New " + choiceButtone;
-                // String newData = login.acceptNewdata(inputLable);
-                // employee.editEmployeeProfile(id, newData, choiceButtone);
-
-                newLabel.setText("Enter New Data: ");
-                ComboBox<String> updateComboBox = new ComboBox<>();
-                updateComboBox.getItems().addAll("Name", "Sex", "Password", "Email");
-                updateComboBox.setOnAction(e -> {
-                    updateChoice = updateComboBox.getValue();
-                });
-                String newdata = newField.getText();
-                employee.editEmployeeProfile(id, newdata, updateChoice);
-
-                vBox = new VBox();
-                vBox.getChildren().addAll(newLabel, newField, updateComboBox);
-                window.close();
-            });
-
-            // view profile
-            button6.setOnAction(ex -> {
-                String profile = employee.seeEmployeeProfile(id);
-                alertbox.viewProfile(profile);
-                window.close();
-            });
-
-            vBox.setAlignment(Pos.CENTER);
-            vBox.setSpacing(10);
-
-        }
-
-        else if (measege.equals("Admin")) {
-            // button list
-            button1.setText("Search Worker");
-            button2.setText("Add Worker");
-            button3.setText("Delete Worker");
-            button4.setText("Search Customer");
-            button5.setText("Update Profile");
-            button6.setText("View Profile");
-            button7.setText("See Bank Capital");
-
-            vBox = new VBox();
-            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6, button7);
-
-            // Action listner
-            // Search Employee
-            button1.setOnAction(ex -> {
-                int Id;
-                String inputLable = "ID Number ";
-                String idInput = login.acceptNewdata(inputLable);
-                Id = Integer.parseInt(idInput);
-                String profile = employee.seeEmployeeProfile(Id);
-                alertbox.viewProfile(profile);
-                window.close();
-            });
-
-            // Add worker
-            button2.setOnAction(ex -> {
-                login.addNewdata("Worker");
-                window.close();
-            });
-
-            // delete worker
-            button3.setOnAction(ex -> {
-                int Id;
-                String inputLable = "ID Number ";
-                String idInput = login.acceptNewdata(inputLable);
-                Id = Integer.parseInt(idInput);
-                employee.deleteEmployee(Id);
-                window.close();
-            });
-
-            // searchCustomer
-            button4.setOnAction(ex -> {
-                int accNo;
-                String inputLable = "Account Number ";
-                inputLable = login.acceptNewdata(inputLable);
-                accNo = Integer.parseInt(inputLable);
-                inputLable = customer.seeCustomerProfile(accNo);
-                alertbox.viewProfile(inputLable);
-                window.close();
-            });
-
-            // update profile
-            button5.setOnAction(ex -> {
-                // String inputLable = "ID Number ";
-                // String idInput = login.acceptNewdata(inputLable);
-                // id = Integer.parseInt(idInput); // change string to int
-                // // display update choice
-                // String choiceButtone = login.updateButton();
-
-                // // accept new data
-                // inputLable = "New " + choiceButtone;
-                // String newData = login.acceptNewdata(inputLable);
-                // employee.editEmployeeProfile(id, newData, choiceButtone);
-                newLabel.setText("Enter New Data: ");
-                ComboBox<String> updateComboBox = new ComboBox<>();
-                updateComboBox.getItems().addAll("Name", "Sex", "Password", "Email");
-                updateComboBox.setOnAction(e -> {
-                    updateChoice = updateComboBox.getValue();
-                });
-
-                Button sumit = new Button("OK");
-                sumit.setOnAction(e -> {
-                    String newdata = newField.getText();
-                    employee.editEmployeeProfile(id, newdata, updateChoice);
-                    window.close();
-                });
-
-                vBox = new VBox();
-                vBox.getChildren().addAll(newLabel, newField, updateComboBox, sumit);
-                vBox.setSpacing(10);
-                Scene scene = new Scene(new BorderPane(vBox), 400, 300); // Create a new scene with the VBox as the root
-                window.setScene(scene);
+                updateProfile(measege, id);
                 // window.close();
             });
 
@@ -387,29 +242,154 @@ public class Main extends Application {
             button6.setOnAction(ex -> {
                 String profile = employee.seeEmployeeProfile(id);
                 alertbox.viewProfile(profile);
-                window.close();
+                // window.close();
             });
-
-            button7.setOnAction(ex -> {
-                double capital = customer.capital();
-                String displayCapital = "**************************************\n" +
-                        "\nCONGRAGULATION\n" +
-                        "\nThe Capital Reachs: " + capital + "  Birr" +
-                        "\n************************************\n";
-                alertbox.viewProfile(displayCapital);
-                window.close();
-            });
-
-            vBox.setAlignment(Pos.CENTER);
-            vBox.setSpacing(10);
         }
 
-        BorderPane layout = new BorderPane();
-        layout.setTop(vBox);
+        else if (measege.equals("Admin")) {
+            String roles = employee.getRoles(id);
+            if (roles.equals("ADMINISTRATOR")) {
+                // button list
+                button1.setText("Search Worker");
+                button2.setText("Add Worker");
+                button3.setText("Delete Worker");
+                button4.setText("Search Customer");
+                button5.setText("Update Profile");
+                button6.setText("View Profile");
+                button7.setText("See Bank Capital");
 
-        Scene scene = new Scene(layout);
+                vBox = new VBox();
+                vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6, button7);
+
+                // Action listner
+                // Search Employee
+                button1.setOnAction(ex -> {
+                    int Id;
+                    String inputLable = "ID Number ";
+                    String idInput = login.acceptNewdata(inputLable);
+                    if (idInput.equals(""))
+                        idInput = "0";
+                    Id = Integer.parseInt(idInput);
+                    String profile = employee.seeEmployeeProfile(Id);
+                    alertbox.viewProfile(profile);
+                    // window.close();
+                });
+
+                // Add worker
+                button2.setOnAction(ex -> {
+                    login.addNewdata("Worker");
+                    // window.close();
+                });
+
+                // delete worker
+                button3.setOnAction(ex -> {
+                    int Id;
+                    String inputLable = "ID Number ";
+                    String idInput = login.acceptNewdata(inputLable);
+                    if (idInput.equals(""))
+                        idInput = "0";
+                    Id = Integer.parseInt(idInput);
+                    employee.deleteEmployee(Id);
+                    // window.close();
+                });
+
+                // searchCustomer
+                button4.setOnAction(ex -> {
+                    int accNo;
+                    String inputLable = "Account Number ";
+                    inputLable = login.acceptNewdata(inputLable);
+                    if (inputLable.equals(""))
+                        inputLable = "0";
+                    accNo = Integer.parseInt(inputLable);
+                    inputLable = customer.seeCustomerProfile(accNo);
+                    alertbox.viewProfile(inputLable);
+                    // window.close();
+                });
+
+                // update profile
+                button5.setOnAction(ex -> {
+                    updateProfile(measege, id);
+                    // window.close();
+                });
+
+                // view profile
+                button6.setOnAction(ex -> {
+                    String profile = employee.seeEmployeeProfile(id);
+                    alertbox.viewProfile(profile);
+                    // window.close();
+                });
+
+                button7.setOnAction(ex -> {
+                    double capital = customer.capital();
+                    String displayCapital = "**************************************\n" +
+                            "\nCONGRAGULATION\n" +
+                            "\nThe Capital Reachs: " + capital + "  Birr" +
+                            "\n************************************\n";
+                    alertbox.viewProfile(displayCapital);
+                    // window.close();
+                });
+            }
+
+            else if (roles.equals("WORKER")) {
+                alertbox.alertWarnning("You data not found in ADMINISTRATOR list");
+                window.close();
+            }
+        }
+
+        vBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(0, 10, 10, 100));
+        vBox.setStyle("-fx-background-color: rgb(100,100,100);");
+
+        Scene scene = new Scene(vBox);
         window.setScene(scene);
         window.showAndWait();
     }
 
+    public void updateProfile(String message, int id) {
+        Stage window = new Stage();
+        window.setTitle("Update Profile");
+        window.setMinHeight(400);
+        window.setMinWidth(350);
+
+        Label choice = new Label("This Will Change Your Information!!! ");
+        choice.setFont(Font.font("Times", FontWeight.BLACK, 17));
+        choice.setTextFill(Color.MEDIUMVIOLETRED);
+
+        Label newLabel = new Label("Enter New Data: ");
+        TextField newField = new TextField();
+        Button submitButton = new Button("Submit");
+        ComboBox<String> updateComboBox = new ComboBox<>();
+        updateComboBox.setPromptText("Which one you want to update?");
+        updateComboBox.getItems().addAll("Name", "Sex", "Password", "Email");
+        updateComboBox.setOnAction(e -> {
+            updateChoice = updateComboBox.getValue();
+        });
+
+        submitButton.setOnAction(e -> {
+            String newdata = newField.getText();
+            if (message.equals("User")) {
+                customer.editCustomerProfile(id, newdata, updateChoice);
+            } else {
+                employee.editEmployeeProfile(id, newdata, updateChoice);
+            }
+            window.close();
+        });
+
+        submitButton.setStyle("-fx-background-color: blue;");
+        submitButton.setTextFill(Color.WHITE);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(choice, updateComboBox, newLabel, newField, submitButton);
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setStyle("-fx-background-color: lightblue;");
+
+        BorderPane layout = new BorderPane();
+        layout.setCenter(vBox);
+
+        Scene scene = new Scene(layout, 400, 300);
+        window.setScene(scene);
+        window.showAndWait();
+    }
 }

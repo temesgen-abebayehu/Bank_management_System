@@ -26,7 +26,7 @@ public class Employee {
 
             if (found == 0) {
                 ID = -1;
-                String alert = "ID number not found";
+                String alert = "IInccorect ID or Password.";
                 alertbox.alertError(alert);
             }
 
@@ -77,40 +77,31 @@ public class Employee {
 
     public void editEmployeeProfile(int ID, String newValue, String choice) {
         try {
-            String updateQuery;
             connectToDatabase();
 
             resultSet = statement.executeQuery("SELECT * FROM employee");
 
             while (resultSet.next()) {
                 if (ID == resultSet.getInt("id")) {
-                    switch (choice) {
-                        case "Name":
-                            updateQuery = "UPDATE employee SET name=? WHERE id=?";
-                        case "Password":
-                            updateQuery = "UPDATE employee SET password=? WHERE id=?";
-                        case "Sex":
-                            updateQuery = "UPDATE employee SET sex=? WHERE id=?";
-                        case "Email":
-                            updateQuery = "UPDATE employee SET email=? WHERE id=?";
-                        default:
-                            updateQuery = "UPDATE employee SET name=?, password=?, sex=?, email=? WHERE id=?";
-                    }
+                    if ("Name".equals(choice) || "Password".equals(choice) || "Sex".equals(choice)
+                            || "Email".equals(choice)) {
 
-                    try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-                        preparedStatement.setString(1, newValue);
-                        preparedStatement.setInt(2, ID);
+                        String updateQuery = "UPDATE employee SET " + choice.toLowerCase() + "=? WHERE id=?";
+                        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                            preparedStatement.setString(1, newValue);
+                            preparedStatement.setInt(2, ID);
 
-                        // Execute the INSERT statement
-                        int rowsAffected = preparedStatement.executeUpdate();
+                            int rowsAffected = preparedStatement.executeUpdate();
 
-                        // Display the result
-                        if (rowsAffected > 0) {
-                            String alert = choice + " updated successfully.";
-                            alertbox.alertError(alert);
-                        } else {
-                            String alert = "No " + choice + " updated. ID Number not found.";
-                            alertbox.alertError(alert);
+                            if (rowsAffected > 0) {
+                                String alert = "Data updated successfully.";
+                                alertbox.alertConfirm(alert);
+                            } else {
+                                String alert = "No data updated. ID Number not found.";
+                                alertbox.alertError(alert);
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -124,30 +115,26 @@ public class Employee {
     }
 
     // ADD Employee
-    public void addEmployee(int ID, String NAME, String PASSWORD, String ADDRESS, String ROLE, String SEX,
+    public void addEmployee(int ID, String NAME, String PASSWORD, String ADDRESS, String SEX,
             String EMAIL) {
         try {
             connectToDatabase();
 
-            // Define the INSERT SQL statement with placeholders (?)
-            String insertSQL = "INSERT INTO employee (id,name,password, address, roles, sex,join_date, email) VALUES (?, ?, ?, ?,?,?,?,?)";
+            String insertSQL = "INSERT INTO employee (id,name,password, address, sex,join_date, email) VALUES (?, ?, ?, ?,?,?,?)";
 
-            // Create a PreparedStatement to avoid SQL injection
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
                 // Set values for the placeholders
                 preparedStatement.setInt(1, ID);
                 preparedStatement.setString(2, NAME);
                 preparedStatement.setString(3, PASSWORD);
                 preparedStatement.setString(4, ADDRESS);
-                preparedStatement.setString(5, ROLE);
-                preparedStatement.setString(6, SEX);
-                preparedStatement.setDate(7, new Date(System.currentTimeMillis()));
-                preparedStatement.setString(8, EMAIL);
+                preparedStatement.setString(5, SEX);
+                preparedStatement.setDate(6, new Date(System.currentTimeMillis()));
+                preparedStatement.setString(7, EMAIL);
 
                 // Execute the INSERT statement
                 int rowsAffected = preparedStatement.executeUpdate();
 
-                // Display the result
                 if (rowsAffected > 0) {
                     String alert = "Data added successfully.";
                     alertbox.alertConfirm(alert);
@@ -168,11 +155,8 @@ public class Employee {
     public void deleteEmployee(int ID) {
         try {
             connectToDatabase();
-
-            // Define the DELETE SQL statement with a condition
             String deleteSQL = "DELETE FROM employee WHERE id = ?";
 
-            // Execute a SQL query and get the result set
             resultSet = statement.executeQuery("SELECT * FROM employee");
 
             // check the account number and password
@@ -180,13 +164,9 @@ public class Employee {
                 if (ID == resultSet.getInt("id")) {
 
                     try (PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-                        // Set the value for the placeholder
                         preparedStatement.setInt(1, ID);
-
-                        // Execute the DELETE statement
                         int rowsAffected = preparedStatement.executeUpdate();
 
-                        // Display the result
                         if (rowsAffected > 0) {
                             String alert = "Data deleted successfully.";
                             alertbox.alertConfirm(alert);
@@ -206,6 +186,24 @@ public class Employee {
         } finally {
             closeResources();
         }
+    }
+
+    public String getRoles(int ID) {
+        String role = "";
+        try {
+            connectToDatabase();
+            resultSet = statement.executeQuery("SELECT * FROM employee");
+            while (resultSet.next()) {
+                if (ID == resultSet.getInt("id")) {
+                    role = resultSet.getString("roles");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return role;
     }
 
     private void connectToDatabase() throws ClassNotFoundException, SQLException {

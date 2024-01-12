@@ -26,8 +26,7 @@ public class Customer {
             }
 
             if (found == 0) {
-                String alert = "Account Number not found";
-                alertbox.alertError(alert);
+                alertbox.alertError("Account Number not found");
             }
 
         } catch (Exception e) {
@@ -53,8 +52,7 @@ public class Customer {
 
             if (found == 0) {
                 accNo=-1;
-                String alert = "Account Number not found";
-                alertbox.alertError(alert);
+                alertbox.alertError("Account Number not found");
             }
 
         } catch (Exception e) {
@@ -90,8 +88,7 @@ public class Customer {
             }
 
             if (found == 0) {
-                String alert = "Account Number not found";
-                System.out.println(alert);
+                System.out.println("Account Number not found");
             }
 
         } catch (Exception e) {
@@ -122,11 +119,9 @@ public class Customer {
                             int rowsAffected = preparedStatement.executeUpdate();
 
                             if (rowsAffected > 0) {
-                                String alert = "Data updated successfully.";
-                                alertbox.alertConfirm(alert);
+                                alertbox.alertConfirm("Data updated successfully.");
                             } else {
-                                String alert = "No data updated. Account Number not found.";
-                                alertbox.alertError(alert);
+                                alertbox.alertError("No data updated. Account Number not found.");
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -224,8 +219,7 @@ public class Customer {
             }
 
             if (found == 0) {
-                String alert = "Account Number not found";
-                alertbox.alertError(alert);
+                alertbox.alertError("Account Number not found");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -261,13 +255,11 @@ public class Customer {
             }
 
             if (found == 0) {
-                String alert = "Account Number not found";
-                alertbox.alertError(alert);
+                alertbox.alertError("Account Number not found");
             }
 
             else {
-                String alert = "Deleted Successfully";
-                alertbox.alertConfirm(alert);
+                alertbox.alertConfirm("Deleted Successfully");
             }
         } catch (Exception e) {
             e.printStackTrace();
