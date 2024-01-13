@@ -4,6 +4,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,13 +48,12 @@ public class Main extends Application {
     Alertbox alertbox = new Alertbox();
 
     String title;
-    static int identifire;
 
     public void start(Stage primaryStage) {
         // Actionlesiner
 
         userMenu.setOnAction(e -> {
-            identifire = -1;
+            int identifire = -1;
             identifire = login.loginForm("Enter Account Number: ", "User");
             if (identifire != -1) {
                 userActiin("User", identifire);
@@ -56,7 +61,7 @@ public class Main extends Application {
         });
 
         workerButton.setOnAction(e -> {
-            identifire = -1;
+            int identifire = -1;
             identifire = login.loginForm("Enter ID Number: ", "Worker");
 
             if (identifire != -1) {
@@ -65,7 +70,7 @@ public class Main extends Application {
         });
 
         adminButton.setOnAction(e -> {
-            identifire = -1;
+            int identifire = -1;
             identifire = login.loginForm("Enter ID Number: ", "Admin");
 
             if (identifire != -1) {
@@ -88,6 +93,15 @@ public class Main extends Application {
             alertbox.viewProfile(helpMessage);
         });
 
+        // background image
+        Image backgroudImage = new Image("/image/home.jpg");
+        BackgroundImage background = new BackgroundImage(
+                backgroudImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
+
         // top menu bar and all operation perform on it
         HBox menuBar = new HBox();
         menuBar.getChildren().addAll(userMenu, workerButton, adminButton, aboutMenu, helpMenu);
@@ -98,12 +112,12 @@ public class Main extends Application {
         // Wellcome message
         Label wellcome = new Label("\t\tWELLCOME To \nBank Management System");
         wellcome.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        wellcome.setTextFill(Color.BLUE);
+        wellcome.setTextFill(Color.GOLD);
 
         BorderPane root = new BorderPane();
         root.setTop(menuBar);
         root.setCenter(wellcome);
-        root.setStyle("-fx-background-color: BROWN;");
+        root.setBackground(new Background(background));
 
         Scene scene = new Scene(root, 700, 650);
         primaryStage.setTitle("Bank System");
@@ -122,9 +136,17 @@ public class Main extends Application {
         window.setMinWidth(350);
 
         VBox vBox = new VBox();
+        // background image
+        Image backgroudImage = new Image("/image/photomanager.jpg");
+        BackgroundImage background = new BackgroundImage(
+                backgroudImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
 
         Label choice = new Label("Select From The List");
-        choice.setFont(Font.font("Times", FontWeight.BLACK, 20));
+        choice.setFont(Font.font("Times", FontWeight.BOLD, 20));
         choice.setPadding(new Insets(15, 10, 20, 10));
         choice.setTextFill(Color.GOLD);
 
@@ -179,6 +201,15 @@ public class Main extends Application {
                 customer.logoutCustomer(id);
                 // window.close();
             });
+
+            // background image
+            backgroudImage = new Image("/image/photouser.jpg");
+            background = new BackgroundImage(
+                    backgroudImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
         }
 
         else if (measege.equals("Worker")) {
@@ -244,9 +275,18 @@ public class Main extends Application {
                 alertbox.viewProfile(profile);
                 // window.close();
             });
+
+            // background image
+            backgroudImage = new Image("/image/photoworker.jpg");
+            background = new BackgroundImage(
+                    backgroudImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
         }
 
-        else if (measege.equals("Admin")) {
+        else {
             String roles = employee.getRoles(id);
             if (roles.equals("ADMINISTRATOR")) {
                 // button list
@@ -328,18 +368,19 @@ public class Main extends Application {
                     alertbox.viewProfile(displayCapital);
                     // window.close();
                 });
+                
             }
 
             else if (roles.equals("WORKER")) {
                 alertbox.alertWarnning("You data not found in ADMINISTRATOR list");
-                window.close();
+                //window.close();
             }
         }
 
         vBox.setAlignment(Pos.CENTER_LEFT);
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(0, 10, 10, 100));
-        vBox.setStyle("-fx-background-color: rgb(100,100,100);");
+        vBox.setBackground(new Background(background));
 
         Scene scene = new Scene(vBox);
         window.setScene(scene);

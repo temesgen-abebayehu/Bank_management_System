@@ -6,6 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -36,21 +43,25 @@ public class Login {
         HBox recivBox = new HBox();
         HBox buttonBox = new HBox();
 
+        //control fild
         Label balanceLabel = new Label("Enter Amoun:  ");
+        balanceLabel.setFont(Font.font("Times",FontWeight.BOLD,16));
+        balanceLabel.setTextFill(Color.WHITE);
         TextField balanceTextField = new TextField();
         Label recivLabel = new Label("Enter Reciver Acount No:  ");
+        recivLabel.setTextFill(Color.WHITE);
         TextField recivField = new TextField();
+
+        Button sumiButton = new Button("Semmit");
+        sumiButton.setStyle("-fx-background-color: blue;");
+        sumiButton.setTextFill(Color.WHITE);
+        Button clearButton = new Button("Clear");
 
         // set box
         balanceBox.getChildren().addAll(balanceLabel, balanceTextField);
         balanceBox.setSpacing(10);
         balanceBox.setAlignment(Pos.CENTER_RIGHT);
-
-        // control fild
-        Button sumiButton = new Button("Semmit");
-        sumiButton.setStyle("-fx-background-color: blue;");
-        sumiButton.setTextFill(Color.WHITE);
-        Button clearButton = new Button("Clear");
+        
 
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setSpacing(15);
@@ -116,8 +127,18 @@ public class Login {
             balanceTextField.setText("");
         });
 
+        // background image
+        Image backgroudImage = new Image("/image/money.jpg");
+        BackgroundImage background = new BackgroundImage(
+                backgroudImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true)
+        );  
+
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-background-color: lightblue;");
+        vBox.setBackground(new Background(background));
         vBox.setPadding(new Insets(100, 10, 10, 10));
 
         Scene scene = new Scene(vBox);
@@ -144,19 +165,32 @@ public class Login {
 
         Label choice = new Label("Fill Approprate Information ");
         choice.setFont(Font.font("Times", FontWeight.BLACK, 20));
-        choice.setTextFill(Color.MEDIUMVIOLETRED);
+        choice.setTextFill(Color.GOLD);
         choice.setPadding(new Insets(25,0,40,25));
 
         Label passwordLabel = new Label("Enter Password:  ");
+        passwordLabel.setTextFill(Color.WHITE);
         TextField passwordTextField = new TextField();
         Label accountLabel = new Label(lable);
+        accountLabel.setTextFill(Color.WHITE);
         TextField accounTextField = new TextField();
 
+        //image icon
+        Image passiconImage = new Image(getClass().getResourceAsStream("/image/iconpassword.png"));
+        ImageView passicon = new ImageView(passiconImage);
+        passicon.setFitWidth(20);
+        passicon.setFitHeight(20);
+
+        Image idiconImage = new Image(getClass().getResourceAsStream("/image/iconid.png"));
+        ImageView idicon = new ImageView(idiconImage);
+        idicon.setFitWidth(20);
+        idicon.setFitHeight(20);
+
         // set box
-        acountBox.getChildren().addAll(accountLabel, accounTextField);
+        acountBox.getChildren().addAll(accountLabel,idicon, accounTextField);
         acountBox.setSpacing(10);
         acountBox.setAlignment(Pos.CENTER_RIGHT);
-        passwordBox.getChildren().addAll(passwordLabel, passwordTextField);
+        passwordBox.getChildren().addAll(passwordLabel,passicon, passwordTextField);
         passwordBox.setSpacing(10);
         passwordBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -169,12 +203,22 @@ public class Login {
 
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setSpacing(15);
-        buttonBox.setPadding(new Insets(15,0,0,120));
+        buttonBox.setPadding(new Insets(15, 0, 0, 120));
+        
+        // background image
+        Image backgroudImage = new Image("/image/lockk.jpg");
+        BackgroundImage background = new BackgroundImage(
+                backgroudImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true)
+        );   
 
         // box conteiner
         vBox.getChildren().addAll(choice,acountBox, passwordBox, buttonBox);
         vBox.setSpacing(10);
-        vBox.setStyle("-fx-background-color: lightblue;");
+        vBox.setBackground(new Background(background));
         vBox.setPadding(new Insets(0,50,0,20));
 
         if (message.equals("User")) {
