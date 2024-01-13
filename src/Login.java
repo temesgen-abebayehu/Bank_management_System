@@ -43,12 +43,13 @@ public class Login {
         HBox recivBox = new HBox();
         HBox buttonBox = new HBox();
 
-        //control fild
+        // control fild
         Label balanceLabel = new Label("Enter Amoun:  ");
-        balanceLabel.setFont(Font.font("Times",FontWeight.BOLD,16));
+        balanceLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
         balanceLabel.setTextFill(Color.WHITE);
         TextField balanceTextField = new TextField();
         Label recivLabel = new Label("Enter Reciver Acount No:  ");
+        recivLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
         recivLabel.setTextFill(Color.WHITE);
         TextField recivField = new TextField();
 
@@ -61,11 +62,10 @@ public class Login {
         balanceBox.getChildren().addAll(balanceLabel, balanceTextField);
         balanceBox.setSpacing(10);
         balanceBox.setAlignment(Pos.CENTER_RIGHT);
-        
 
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setSpacing(15);
-        buttonBox.setPadding(new Insets(15,0,0,120));
+        buttonBox.setPadding(new Insets(15, 0, 0, 120));
 
         if (message.equals("Transfer")) {
             recivBox.getChildren().addAll(recivLabel, recivField);
@@ -92,6 +92,8 @@ public class Login {
 
             if (message.equals("Deposit")) {
                 Label accountLabel = new Label("Enter Account Number: ");
+                accountLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
+                accountLabel.setTextFill(Color.WHITE);
                 TextField acountField = new TextField();
                 vBox = new VBox();
                 HBox acountBox = new HBox();
@@ -134,8 +136,7 @@ public class Login {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true)
-        );  
+                new BackgroundSize(400, 400, false, false, false, false));
 
         vBox.setSpacing(10);
         vBox.setBackground(new Background(background));
@@ -166,16 +167,20 @@ public class Login {
         Label choice = new Label("Fill Approprate Information ");
         choice.setFont(Font.font("Times", FontWeight.BLACK, 20));
         choice.setTextFill(Color.GOLD);
-        choice.setPadding(new Insets(25,0,40,25));
+        choice.setPadding(new Insets(25, 0, 40, 25));
 
-        Label passwordLabel = new Label("Enter Password:  ");
+        Label passwordLabel = new Label("Password:  ");
+        passwordLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         passwordLabel.setTextFill(Color.WHITE);
+
         TextField passwordTextField = new TextField();
-        Label accountLabel = new Label(lable);
-        accountLabel.setTextFill(Color.WHITE);
         TextField accounTextField = new TextField();
 
-        //image icon
+        Label accountLabel = new Label(lable);
+        accountLabel.setTextFill(Color.WHITE);
+        accountLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
+        // image icon
         Image passiconImage = new Image(getClass().getResourceAsStream("/image/iconpassword.png"));
         ImageView passicon = new ImageView(passiconImage);
         passicon.setFitWidth(20);
@@ -187,10 +192,10 @@ public class Login {
         idicon.setFitHeight(20);
 
         // set box
-        acountBox.getChildren().addAll(accountLabel,idicon, accounTextField);
+        acountBox.getChildren().addAll(accountLabel, idicon, accounTextField);
         acountBox.setSpacing(10);
         acountBox.setAlignment(Pos.CENTER_RIGHT);
-        passwordBox.getChildren().addAll(passwordLabel,passicon, passwordTextField);
+        passwordBox.getChildren().addAll(passwordLabel, passicon, passwordTextField);
         passwordBox.setSpacing(10);
         passwordBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -204,7 +209,7 @@ public class Login {
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setSpacing(15);
         buttonBox.setPadding(new Insets(15, 0, 0, 120));
-        
+
         // background image
         Image backgroudImage = new Image("/image/lockk.jpg");
         BackgroundImage background = new BackgroundImage(
@@ -212,14 +217,13 @@ public class Login {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true)
-        );   
+                new BackgroundSize(400, 400, false, false, false, false));
 
         // box conteiner
-        vBox.getChildren().addAll(choice,acountBox, passwordBox, buttonBox);
+        vBox.getChildren().addAll(choice, acountBox, passwordBox, buttonBox);
         vBox.setSpacing(10);
         vBox.setBackground(new Background(background));
-        vBox.setPadding(new Insets(0,50,0,20));
+        vBox.setPadding(new Insets(0, 50, 0, 20));
 
         if (message.equals("User")) {
             sumiButton.setOnAction(e -> {
@@ -250,7 +254,7 @@ public class Login {
         return identifire;
     }
 
-    static String newData="";
+    static String newData = "";
 
     public String acceptNewdata(String choice) {
         Stage window = new Stage();
@@ -290,13 +294,13 @@ public class Login {
 
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setSpacing(10);
-        buttonBox.setPadding(new Insets(15,0,0,120));
+        buttonBox.setPadding(new Insets(15, 0, 0, 120));
 
         // box conteiner
         vBox.getChildren().addAll(nameBox, buttonBox);
         vBox.setSpacing(10);
         vBox.setStyle("-fx-background-color: lightblue;");
-        vBox.setPadding(new Insets(50,50,0,0));
+        vBox.setPadding(new Insets(50, 50, 0, 0));
 
         Scene scene = new Scene(vBox);
         window.setScene(scene);
@@ -311,7 +315,7 @@ public class Login {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Add New "+ message);
+        window.setTitle("Add New " + message);
         window.setMinHeight(500);
         window.setMinWidth(400);
 
@@ -375,19 +379,11 @@ public class Login {
                 window.close();
             });
 
-            clearButton.setOnAction(e -> {
-                idField.setText("");
-                nameTextField.setText("");
-                passwordTextField.setText("");
-                addresLabel.setText("");
-                balanceTextField.setText("");
-                emailField.setText("");
-            });
             vBox.getChildren().addAll(idBox, nameBox, passwordBox, addresBox, emailBox, balanceBox, sexBox, buttonBox);
         }
 
         else {
-            //call addEmployee method
+            // call addEmployee method
             sumiButton.setOnAction(e -> {
                 int id = Integer.parseInt(idField.getText());
                 String name = nameTextField.getText();
@@ -399,15 +395,18 @@ public class Login {
                 window.close();
             });
 
-            clearButton.setOnAction(e -> {
-                idField.setText("");
-                nameTextField.setText("");
-                passwordTextField.setText("");
-                addresLabel.setText("");
-                emailField.setText("");
-            });
-            vBox.getChildren().addAll(idBox, nameBox, passwordBox, addresBox, emailBox,  sexBox, buttonBox);
+            vBox.getChildren().addAll(idBox, nameBox, passwordBox, addresBox, emailBox, sexBox, buttonBox);
         }
+
+        //clear data
+        clearButton.setOnAction(e -> {
+            idField.setText("");
+            nameTextField.setText("");
+            passwordTextField.setText("");
+            addresField.setText("");
+            balanceTextField.setText("");
+            emailField.setText("");
+        });
 
         // set input fild
         idBox.getChildren().addAll(idLabel, idField);
@@ -432,13 +431,13 @@ public class Login {
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         buttonBox.setSpacing(15);
-        buttonBox.setPadding(new Insets(15,0,0,120));
+        buttonBox.setPadding(new Insets(15, 0, 0, 120));
 
         sumiButton.setStyle("-fx-background-color: blue;");
         sumiButton.setTextFill(Color.WHITE);
 
         // box conteiner
-        
+
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER_LEFT);
         vBox.setStyle("-fx-background-color: lightblue;");

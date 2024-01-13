@@ -54,7 +54,7 @@ public class Main extends Application {
 
         userMenu.setOnAction(e -> {
             int identifire = -1;
-            identifire = login.loginForm("Enter Account Number: ", "User");
+            identifire = login.loginForm("Account Number: ", "User");
             if (identifire != -1) {
                 userActiin("User", identifire);
             }
@@ -62,7 +62,7 @@ public class Main extends Application {
 
         workerButton.setOnAction(e -> {
             int identifire = -1;
-            identifire = login.loginForm("Enter ID Number: ", "Worker");
+            identifire = login.loginForm("ID Number: ", "Worker");
 
             if (identifire != -1) {
                 userActiin("Worker", identifire);
@@ -71,7 +71,7 @@ public class Main extends Application {
 
         adminButton.setOnAction(e -> {
             int identifire = -1;
-            identifire = login.loginForm("Enter ID Number: ", "Admin");
+            identifire = login.loginForm("ID Number: ", "Admin");
 
             if (identifire != -1) {
                 userActiin("Admin", identifire);
@@ -100,7 +100,7 @@ public class Main extends Application {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
+                new BackgroundSize(700, 650, false, false, false, false));
 
         // top menu bar and all operation perform on it
         HBox menuBar = new HBox();
@@ -133,17 +133,17 @@ public class Main extends Application {
         title = measege + " Page";
         window.setTitle(title);
         window.setMinHeight(400);
-        window.setMinWidth(350);
+        window.setMinWidth(400);
 
         VBox vBox = new VBox();
         // background image
-        Image backgroudImage = new Image("/image/photomanager.jpg");
+        Image backgroudImage = new Image("/image/photoadmin.jpeg");
         BackgroundImage background = new BackgroundImage(
                 backgroudImage,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
+                new BackgroundSize(400, 400 , false, false, false, false));
 
         Label choice = new Label("Select From The List");
         choice.setFont(Font.font("Times", FontWeight.BOLD, 20));
@@ -166,40 +166,40 @@ public class Main extends Application {
             // Withdraw money
             button1.setOnAction(ex -> {
                 login.inputTransaction("Withdraw", id);
-                // window.close();
+                window.close();
             });
 
             // Transfer money
             button2.setOnAction(ex -> {
                 login.inputTransaction("Transfer", id);
-                // window.close();
+                window.close();
             });
 
             // view Profile
             button3.setOnAction(ex -> {
                 String profile = customer.seeCustomerProfile(id);
                 alertbox.viewProfile(profile);
-                // window.close();
+                window.close();
             });
 
             // check balance
             button4.setOnAction(ex -> {
                 String balanceInfo = customer.checkBalance(id);
                 alertbox.viewProfile(balanceInfo);
-                // window.close();
+                window.close();
             });
 
             // update profile
             button5.setOnAction(ex -> {
                 updateProfile(measege, id);
-                // window.close();
+                window.close();
             });
 
             // logout
             button6.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all your information!!!");
                 customer.logoutCustomer(id);
-                // window.close();
+                window.close();
             });
 
             // background image
@@ -209,7 +209,7 @@ public class Main extends Application {
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.CENTER,
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
+                    new BackgroundSize(400, 400, false, false, false, false));
         }
 
         else if (measege.equals("Worker")) {
@@ -228,17 +228,18 @@ public class Main extends Application {
             // Deposit money
             button1.setOnAction(ex -> {
                 login.inputTransaction("Deposit", id);
-                // window.close();
+                window.close();
             });
 
             // Add customer
             button2.setOnAction(ex -> {
                 login.addNewdata("Customer");
-                // window.close();
+                window.close();
             });
 
             // delete customer
             button3.setOnAction(ex -> {
+                alertbox.alertWarnning("It may delete all information!!!");
                 int accNo;
                 String inputLable = "Account Number ";
                 String accountString = login.acceptNewdata(inputLable);
@@ -247,7 +248,7 @@ public class Main extends Application {
                 }
                 accNo = Integer.parseInt(accountString);
                 customer.logoutCustomer(accNo);
-                // window.close();
+                window.close();
             });
 
             // searchCustomer
@@ -260,20 +261,20 @@ public class Main extends Application {
                 accNo = Integer.parseInt(inputLable);
                 inputLable = customer.seeCustomerProfile(accNo);
                 alertbox.viewProfile(inputLable);
-                // window.close();
+                window.close();
             });
 
             // update profile
             button5.setOnAction(ex -> {
                 updateProfile(measege, id);
-                // window.close();
+                window.close();
             });
 
             // view profile
             button6.setOnAction(ex -> {
                 String profile = employee.seeEmployeeProfile(id);
                 alertbox.viewProfile(profile);
-                // window.close();
+                window.close();
             });
 
             // background image
@@ -283,7 +284,7 @@ public class Main extends Application {
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.CENTER,
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
+                    new BackgroundSize(400,400, false, false, false, false));
         }
 
         else {
@@ -312,17 +313,18 @@ public class Main extends Application {
                     Id = Integer.parseInt(idInput);
                     String profile = employee.seeEmployeeProfile(Id);
                     alertbox.viewProfile(profile);
-                    // window.close();
+                    window.close();
                 });
 
                 // Add worker
                 button2.setOnAction(ex -> {
                     login.addNewdata("Worker");
-                    // window.close();
+                    window.close();
                 });
 
                 // delete worker
                 button3.setOnAction(ex -> {
+                    alertbox.alertWarnning("It may delete all information!!!");
                     int Id;
                     String inputLable = "ID Number ";
                     String idInput = login.acceptNewdata(inputLable);
@@ -330,7 +332,7 @@ public class Main extends Application {
                         idInput = "0";
                     Id = Integer.parseInt(idInput);
                     employee.deleteEmployee(Id);
-                    // window.close();
+                    window.close();
                 });
 
                 // searchCustomer
@@ -343,20 +345,20 @@ public class Main extends Application {
                     accNo = Integer.parseInt(inputLable);
                     inputLable = customer.seeCustomerProfile(accNo);
                     alertbox.viewProfile(inputLable);
-                    // window.close();
+                    window.close();
                 });
 
                 // update profile
                 button5.setOnAction(ex -> {
                     updateProfile(measege, id);
-                    // window.close();
+                    window.close();
                 });
 
                 // view profile
                 button6.setOnAction(ex -> {
                     String profile = employee.seeEmployeeProfile(id);
                     alertbox.viewProfile(profile);
-                    // window.close();
+                    window.close();
                 });
 
                 button7.setOnAction(ex -> {
@@ -366,14 +368,15 @@ public class Main extends Application {
                             "\nThe Capital Reachs: " + capital + "  Birr" +
                             "\n************************************\n";
                     alertbox.viewProfile(displayCapital);
-                    // window.close();
+                    window.close();
                 });
                 
             }
 
             else if (roles.equals("WORKER")) {
-                alertbox.alertWarnning("You data not found in ADMINISTRATOR list");
-                //window.close();
+                vBox = new VBox();
+                alertbox.alertWarnning("Your data are not found in ADMINISTRATOR list");
+                window.close();
             }
         }
 
@@ -390,8 +393,8 @@ public class Main extends Application {
     public void updateProfile(String message, int id) {
         Stage window = new Stage();
         window.setTitle("Update Profile");
-        window.setMinHeight(400);
-        window.setMinWidth(350);
+        window.setMinHeight(250);
+        window.setMinWidth(400);
 
         Label choice = new Label("This Will Change Your Information!!! ");
         choice.setFont(Font.font("Times", FontWeight.BLACK, 17));
@@ -420,16 +423,17 @@ public class Main extends Application {
         submitButton.setStyle("-fx-background-color: blue;");
         submitButton.setTextFill(Color.WHITE);
 
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(newLabel, newField);
+        hBox.setPadding(new Insets(15,40,15,40));
+
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(choice, updateComboBox, newLabel, newField, submitButton);
+        vBox.getChildren().addAll(choice, updateComboBox, hBox, submitButton);
         vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10));
         vBox.setStyle("-fx-background-color: lightblue;");
+        vBox.setAlignment(Pos.CENTER);
 
-        BorderPane layout = new BorderPane();
-        layout.setCenter(vBox);
-
-        Scene scene = new Scene(layout, 400, 300);
+        Scene scene = new Scene(vBox);
         window.setScene(scene);
         window.showAndWait();
     }

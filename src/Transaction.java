@@ -42,13 +42,11 @@ public class Transaction {
                 }
             }
             if (found == 0) {
-                String alert = "Account Number not found";
-                alertbox.alertWarnning(alert);
+                alertbox.alertError("Account Number not found");
             }
 
             else {
-                String alert = "Diposit Money successfully.";
-                alertbox.alertConfirm(alert);
+                alertbox.alertConfirm("Diposit Money successfully.");
             }
 
         } catch (Exception e) {
@@ -90,13 +88,11 @@ public class Transaction {
                 }
             }
             if (found == 0) {
-                String alert = "Account Number not found";
-                alertbox.alertError(alert);
+                alertbox.alertError( "Account Number not found");
             }
 
             else {
-                String alert = "Withdraw Money successfully.";
-                alertbox.alertConfirm(alert);
+                alertbox.alertConfirm("Withdraw Money successfully.");
             }
 
         } catch (Exception e) {
@@ -106,73 +102,70 @@ public class Transaction {
         }
     }
 
-public void transferMoney(int senderAccountNo, double amount, int receiverAccountNo) {
-    try {
-        establishConnection();
+    public void transferMoney(int senderAccountNo, double amount, int receiverAccountNo) {
+        try {
+            establishConnection();
 
-        // Check sender's balance and ID
-        double senderBalance = 0;
-        int senderID = -1;
-        resultSet = statement.executeQuery("SELECT * FROM customer");
+            // Check sender's balance and ID
+            double senderBalance = 0;
+            int senderID = -1;
+            resultSet = statement.executeQuery("SELECT * FROM customer");
 
-        while (resultSet.next()) {
-            if (senderAccountNo == resultSet.getInt("account_no")) {
-                senderID = resultSet.getInt("id");
-                senderBalance = resultSet.getDouble("balance");
-                break;
+            while (resultSet.next()) {
+                if (senderAccountNo == resultSet.getInt("account_no")) {
+                    senderID = resultSet.getInt("id");
+                    senderBalance = resultSet.getDouble("balance");
+                    break;
+                }
             }
-        }
 
-        if (senderID == -1 || senderBalance < amount) {
-            String alert = (senderID == -1) ? "Sender Account Number not found" : "Insufficient balance";
-            alertbox.alertWarnning(alert);
-            return;
-        }
-
-        // Check if receiver exists
-        resultSet = statement.executeQuery("SELECT * FROM customer");
-        int receiverID = -1;
-        double receiverBalance = 0;
-
-        while (resultSet.next()) {
-            if (receiverAccountNo == resultSet.getInt("account_no")) {
-                receiverID = resultSet.getInt("id");
-                receiverBalance = resultSet.getDouble("balance");
-                break;
+            if (senderID == -1 || senderBalance < amount) {
+                String alert = (senderID == -1) ? "Sender Account Number not found" : "Insufficient balance";
+                alertbox.alertWarnning(alert);
+                return;
             }
+
+            // Check if receiver exists
+            resultSet = statement.executeQuery("SELECT * FROM customer");
+            int receiverID = -1;
+            double receiverBalance = 0;
+
+            while (resultSet.next()) {
+                if (receiverAccountNo == resultSet.getInt("account_no")) {
+                    receiverID = resultSet.getInt("id");
+                    receiverBalance = resultSet.getDouble("balance");
+                    break;
+                }
+            }
+
+            if (receiverID == -1) {
+                alertbox.alertError("Receiver Account Number not found");
+                return;
+            }
+
+            // Update sender's balance
+            updateBalance(senderBalance - amount, senderAccountNo);
+
+            // Update receiver's balance
+            updateBalance( receiverBalance + amount, receiverAccountNo);
+
+            alertbox.alertConfirm("Transfer successful");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
         }
+    }
 
-        if (receiverID == -1) {
-            alertbox.alertError("Receiver Account Number not found");
-            return;
+    private void updateBalance( double newBalance, int accountNo) throws SQLException {
+        String updateQuery = "UPDATE customer SET balance=? WHERE account_no=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+            preparedStatement.setDouble(1, newBalance);
+            preparedStatement.setInt(2, accountNo);
+            preparedStatement.executeUpdate();
         }
-
-        // Update sender's balance
-        updateBalance(senderID, senderBalance - amount, senderAccountNo);
-
-        // Update receiver's balance
-        updateBalance(receiverID, receiverBalance + amount, receiverAccountNo);
-
-        alertbox.alertConfirm("Transfer successful");
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        closeResources();
     }
-}
-
-private void updateBalance(int customerID, double newBalance, int accountNo) throws SQLException {
-    String updateQuery = "UPDATE customer SET balance=? WHERE id=? AND account_no=?";
-    try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-        preparedStatement.setDouble(1, newBalance);
-        preparedStatement.setInt(2, customerID);
-        preparedStatement.setInt(3, accountNo);
-        preparedStatement.executeUpdate();
-    }
-}
-
-
 
     private void establishConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");

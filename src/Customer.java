@@ -52,7 +52,7 @@ public class Customer {
 
             if (found == 0) {
                 accNo=-1;
-                alertbox.alertError("Account Number not found");
+                alertbox.alertError("Inccorect Password Or Account Number ");
             }
 
         } catch (Exception e) {

@@ -11,11 +11,7 @@ public class Alertbox {
 
         alert.setTitle("Information Dialog");
         alert.setHeaderText(message);
-
-        // Show the alert
         alert.showAndWait();
-
-        // Close the application
         primaryStage.close();
     }
 
@@ -24,12 +20,8 @@ public class Alertbox {
         Alert alert = new Alert(AlertType.ERROR);
 
         alert.setTitle("Error Dialog");
-        alert.setHeaderText(message);
-
-        // Show the alert
+        alert.setContentText(message);
         alert.showAndWait();
-
-        // Close the application
         primaryStage.close();
     }
 
@@ -38,12 +30,8 @@ public class Alertbox {
         Alert alert = new Alert(AlertType.WARNING);
 
         alert.setTitle("Warning Dialog");
-        alert.setHeaderText(message);
-
-        // Show the alert
+        alert.setContentText(message);
         alert.showAndWait();
-
-        // Close the application
         primaryStage.close();
     }
 
@@ -51,15 +39,15 @@ public class Alertbox {
         // founder name
         String message = "\n***********************************************\n" +
                 "\tMembers Name\t\tID Number\n" +
-                "1. Temesgen Abebayehu\t\tETS 1534/14\n" +
+                "1. Temesgen Abebayehu\tETS 1534/14\n" +
                 "2. Tesfamicael Almaw\t\tETS 1544/14\n" +
                 "3. Tewuhbo Mihret\t\tETS 1554/14\n" +
-                "4. Tinsae Daniel\t\tETS 1560/14\n" +
+                "4. Tinsae Daniel\t\t\tETS 1560/14\n" +
                 "5. Tsion Kassahun\t\tETS 1585/14\n" +
-                "6. Tsiyon Gashaw\t\tETS 1588/14\n" +
+                "6. Tsiyon Gashaw\t\t\tETS 1588/14\n" +
 
-                "\n\n\tSubmitted to: Ms. Fuad yimer" +
-                "\n\tSubmission date: Nov 18/2023" +
+                "\n\n\tSubmitted to: Ms. Fuad Yimer" +
+                "\n\tSubmission date: Jan 28/2024" +
                 "\n***********************************************\n";
 
         Stage primaryStage = new Stage();
@@ -67,11 +55,7 @@ public class Alertbox {
 
         alert.setTitle("Information Dialog");
         alert.setContentText(message);
-
-        // Show the alert
         alert.showAndWait();
-
-        // Close the application
         primaryStage.close();
     }
     
@@ -83,11 +67,7 @@ public class Alertbox {
 
         alert.setTitle("Information Dialog");
         alert.setContentText(message);
-
-        // Show the alert
         alert.showAndWait();
-
-        // Close the application
         primaryStage.close();
     }
 }
