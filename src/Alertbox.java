@@ -59,7 +59,7 @@ public class Alertbox {
         primaryStage.close();
     }
     
-    public void viewProfile(String message) {
+    public void dispalyInfo(String message) {
         
 
         Stage primaryStage = new Stage();

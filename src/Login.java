@@ -147,10 +147,11 @@ public class Login {
         window.showAndWait();
     }
 
-    static int identifire = -1;
+    static int identifire;
 
     public int loginForm(String lable, String message) {
         Stage window = new Stage();
+        identifire = -1;
 
         window.initModality(Modality.WINDOW_MODAL);
         window.setTitle("Login");
@@ -166,7 +167,7 @@ public class Login {
 
         Label choice = new Label("Fill Approprate Information ");
         choice.setFont(Font.font("Times", FontWeight.BLACK, 20));
-        choice.setTextFill(Color.GOLD);
+        choice.setTextFill(Color.RED);
         choice.setPadding(new Insets(25, 0, 40, 25));
 
         Label passwordLabel = new Label("Password:  ");

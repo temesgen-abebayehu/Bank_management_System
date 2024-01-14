@@ -206,6 +206,23 @@ public class Employee {
         return role;
     }
 
+    public int getNumerOfEmployee() {
+        int count=0;
+        try{
+            connectToDatabase();
+            resultSet=statement.executeQuery("SELECT * FROM employee ");
+            
+            while(resultSet.next()){
+                count++;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return count;
+    }
+
     private void connectToDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(url, username, password);

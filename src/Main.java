@@ -38,6 +38,7 @@ public class Main extends Application {
     Button button5 = new Button();
     Button button6 = new Button();
     Button button7 = new Button();
+    Button button8 = new Button();
     Label choice = new Label();
 
     // Class
@@ -90,7 +91,7 @@ public class Main extends Application {
                     "\nMain Ofice:\tAddis Ababa, Ethiopia" +
                     "\n*********************************";
 
-            alertbox.viewProfile(helpMessage);
+            alertbox.dispalyInfo(helpMessage);
         });
 
         // background image
@@ -132,8 +133,8 @@ public class Main extends Application {
         Stage window = new Stage();
         title = measege + " Page";
         window.setTitle(title);
-        window.setMinHeight(400);
-        window.setMinWidth(400);
+        window.setMinHeight(450);
+        window.setMinWidth(450);
 
         VBox vBox = new VBox();
         // background image
@@ -143,12 +144,21 @@ public class Main extends Application {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(400, 400 , false, false, false, false));
+                new BackgroundSize(450, 450 , false, false, false, false));
 
         Label choice = new Label("Select From The List");
         choice.setFont(Font.font("Times", FontWeight.BOLD, 20));
-        choice.setPadding(new Insets(15, 10, 20, 10));
+        choice.setPadding(new Insets(10, 10, 20, 10));
         choice.setTextFill(Color.GOLD);
+
+        //Exit button
+        Button exitButton = new Button("EXIT");
+        exitButton.setOnAction(e -> window.close());
+        exitButton.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 16));
+        exitButton.setStyle("-fx-background-color: lightblue;");
+        HBox exitBox = new HBox();
+        exitBox.getChildren().addAll(exitButton);
+        exitBox.setPadding(new Insets(20,10,10,200));
 
         if (measege.equals("User")) {
             // button list
@@ -160,46 +170,34 @@ public class Main extends Application {
             button6.setText("Logout");
 
             vBox = new VBox();
-            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6);
+            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6,exitBox);
 
             // Action listner
             // Withdraw money
-            button1.setOnAction(ex -> {
-                login.inputTransaction("Withdraw", id);
-                window.close();
-            });
+            button1.setOnAction(ex -> login.inputTransaction("Withdraw", id));
 
             // Transfer money
-            button2.setOnAction(ex -> {
-                login.inputTransaction("Transfer", id);
-                window.close();
-            });
+            button2.setOnAction(ex -> login.inputTransaction("Transfer", id));
 
             // view Profile
             button3.setOnAction(ex -> {
                 String profile = customer.seeCustomerProfile(id);
-                alertbox.viewProfile(profile);
-                window.close();
+                alertbox.dispalyInfo(profile);
             });
 
             // check balance
             button4.setOnAction(ex -> {
                 String balanceInfo = customer.checkBalance(id);
-                alertbox.viewProfile(balanceInfo);
-                window.close();
+                alertbox.dispalyInfo(balanceInfo);
             });
 
             // update profile
-            button5.setOnAction(ex -> {
-                updateProfile(measege, id);
-                window.close();
-            });
+            button5.setOnAction(ex -> updateProfile(measege, id));
 
             // logout
             button6.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all your information!!!");
                 customer.logoutCustomer(id);
-                window.close();
             });
 
             // background image
@@ -222,20 +220,17 @@ public class Main extends Application {
             button6.setText("View Profile");
 
             vBox = new VBox();
-            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6);
+            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6,exitBox);
 
             // Action listner
             // Deposit money
             button1.setOnAction(ex -> {
                 login.inputTransaction("Deposit", id);
-                window.close();
+                // window.close();
             });
 
             // Add customer
-            button2.setOnAction(ex -> {
-                login.addNewdata("Customer");
-                window.close();
-            });
+            button2.setOnAction(ex -> login.addNewdata("Customer"));
 
             // delete customer
             button3.setOnAction(ex -> {
@@ -248,7 +243,6 @@ public class Main extends Application {
                 }
                 accNo = Integer.parseInt(accountString);
                 customer.logoutCustomer(accNo);
-                window.close();
             });
 
             // searchCustomer
@@ -260,21 +254,18 @@ public class Main extends Application {
                     inputLable = "0";
                 accNo = Integer.parseInt(inputLable);
                 inputLable = customer.seeCustomerProfile(accNo);
-                alertbox.viewProfile(inputLable);
-                window.close();
+                alertbox.dispalyInfo(inputLable);
             });
 
             // update profile
             button5.setOnAction(ex -> {
                 updateProfile(measege, id);
-                window.close();
             });
 
             // view profile
             button6.setOnAction(ex -> {
                 String profile = employee.seeEmployeeProfile(id);
-                alertbox.viewProfile(profile);
-                window.close();
+                alertbox.dispalyInfo(profile);
             });
 
             // background image
@@ -295,12 +286,13 @@ public class Main extends Application {
                 button2.setText("Add Worker");
                 button3.setText("Delete Worker");
                 button4.setText("Search Customer");
-                button5.setText("Update Profile");
-                button6.setText("View Profile");
-                button7.setText("See Bank Capital");
+                button5.setText("No of Worker");
+                button6.setText("No of Customer");
+                button7.setText("View Profile");
+                button8.setText("See Bank Capital");
 
                 vBox = new VBox();
-                vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6, button7);
+                vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6, button7,button8,exitBox);
 
                 // Action listner
                 // Search Employee
@@ -312,15 +304,11 @@ public class Main extends Application {
                         idInput = "0";
                     Id = Integer.parseInt(idInput);
                     String profile = employee.seeEmployeeProfile(Id);
-                    alertbox.viewProfile(profile);
-                    window.close();
+                    alertbox.dispalyInfo(profile);
                 });
 
                 // Add worker
-                button2.setOnAction(ex -> {
-                    login.addNewdata("Worker");
-                    window.close();
-                });
+                button2.setOnAction(ex -> login.addNewdata("Worker"));
 
                 // delete worker
                 button3.setOnAction(ex -> {
@@ -332,7 +320,6 @@ public class Main extends Application {
                         idInput = "0";
                     Id = Integer.parseInt(idInput);
                     employee.deleteEmployee(Id);
-                    window.close();
                 });
 
                 // searchCustomer
@@ -344,31 +331,41 @@ public class Main extends Application {
                         inputLable = "0";
                     accNo = Integer.parseInt(inputLable);
                     inputLable = customer.seeCustomerProfile(accNo);
-                    alertbox.viewProfile(inputLable);
-                    window.close();
+                    alertbox.dispalyInfo(inputLable);
                 });
 
-                // update profile
-                button5.setOnAction(ex -> {
-                    updateProfile(measege, id);
-                    window.close();
-                });
+                // Number of Worker
+                 button5.setOnAction(ex -> {
+                    int numberOfWorkers = employee.getNumerOfEmployee();
+                    String displayMessage = "********************************************\n\n" +
+                            "CURRENTLY THE BANK HAS _ " + numberOfWorkers + " _ WORKERS\n\n" +
+                                            "********************************************\n";
+                    alertbox.dispalyInfo(displayMessage);
+                 });
+                
+                 //number of Customer
+                 button6.setOnAction(e -> {
+                     int numberOfWorkers = customer.getNoOfCustomer();
+                    String displayMessage = "********************************************\n\n" +
+                            "CURRENTLY THE BANK HAS _ " + numberOfWorkers + " _ CUSTOMERS\n\n" +
+                            "********************************************\n";
+                    alertbox.dispalyInfo(displayMessage);
+                 });
 
                 // view profile
-                button6.setOnAction(ex -> {
+                button7.setOnAction(ex -> {
                     String profile = employee.seeEmployeeProfile(id);
-                    alertbox.viewProfile(profile);
-                    window.close();
+                    alertbox.dispalyInfo(profile);
                 });
 
-                button7.setOnAction(ex -> {
-                    double capital = customer.capital();
+                //Bank capital
+                button8.setOnAction(ex -> {
+                    double capital = customer.getBankCapital();
                     String displayCapital = "**************************************\n" +
                             "\nCONGRAGULATION\n" +
                             "\nThe Capital Reachs: " + capital + "  Birr" +
                             "\n************************************\n";
-                    alertbox.viewProfile(displayCapital);
-                    window.close();
+                    alertbox.dispalyInfo(displayCapital);
                 });
                 
             }

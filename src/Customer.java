@@ -51,7 +51,7 @@ public class Customer {
             }
 
             if (found == 0) {
-                accNo=-1;
+                accNo = -1;
                 alertbox.alertError("Inccorect Password Or Account Number ");
             }
 
@@ -204,30 +204,39 @@ public class Customer {
         }
     }
 
-    public double capital() {
+    public double getBankCapital() {
         double balance = 0;
 
         try {
             establishConnection();
-
             resultSet = statement.executeQuery("SELECT * FROM customer");
 
-            int found = 0;
             while (resultSet.next()) {
                 balance += resultSet.getDouble("balance");
-                found++;
-            }
-
-            if (found == 0) {
-                alertbox.alertError("Account Number not found");
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             closeResources();
         }
-
         return balance;
+    }
+
+    public int getNoOfCustomer() {
+        int count = 0;
+        try {
+            establishConnection();
+            resultSet = statement.executeQuery("SELECT * FROM customer");
+
+            while (resultSet.next()) {
+                count++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return count;
     }
 
     public void logoutCustomer(int account_no) {
