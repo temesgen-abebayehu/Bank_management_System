@@ -27,7 +27,7 @@ public class Main extends Application {
     Button userMenu = new Button("_User");
     Button workerButton = new Button("_Worker");
     Button adminButton = new Button("_Admin");
-    Button aboutMenu = new Button("_About Us");
+    Button aboutMenu = new Button("About _Us");
     Button helpMenu = new Button("_Help");
 
     // control fild
@@ -47,6 +47,8 @@ public class Main extends Application {
     Customer customer = new Customer();
     Employee employee = new Employee();
     Alertbox alertbox = new Alertbox();
+    InputTransaction inputTransaction = new InputTransaction();
+    AcceptNewData acceptNewData = new AcceptNewData();
 
     String title;
 
@@ -174,10 +176,10 @@ public class Main extends Application {
 
             // Action listner
             // Withdraw money
-            button1.setOnAction(ex -> login.inputTransaction("Withdraw", id));
+            button1.setOnAction(ex -> inputTransaction.inputTransaction("Withdraw", id));
 
             // Transfer money
-            button2.setOnAction(ex -> login.inputTransaction("Transfer", id));
+            button2.setOnAction(ex -> inputTransaction.inputTransaction("Transfer", id));
 
             // view Profile
             button3.setOnAction(ex -> {
@@ -224,20 +226,17 @@ public class Main extends Application {
 
             // Action listner
             // Deposit money
-            button1.setOnAction(ex -> {
-                login.inputTransaction("Deposit", id);
-                // window.close();
-            });
+            button1.setOnAction(ex -> inputTransaction.inputTransaction("Deposit", id));
 
             // Add customer
-            button2.setOnAction(ex -> login.addNewdata("Customer"));
+            button2.setOnAction(ex -> acceptNewData.addNewdata("Customer"));
 
             // delete customer
             button3.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all information!!!");
                 int accNo;
                 String inputLable = "Account Number ";
-                String accountString = login.acceptNewdata(inputLable);
+                String accountString = acceptNewData.acceptNewdata(inputLable);
                 if (accountString.equals("")) {
                     accountString = "0";
                 }
@@ -249,7 +248,7 @@ public class Main extends Application {
             button4.setOnAction(ex -> {
                 int accNo;
                 String inputLable = "Account Number ";
-                inputLable = login.acceptNewdata(inputLable);
+                inputLable = acceptNewData.acceptNewdata(inputLable);
                 if (inputLable.equals(""))
                     inputLable = "0";
                 accNo = Integer.parseInt(inputLable);
@@ -299,7 +298,7 @@ public class Main extends Application {
                 button1.setOnAction(ex -> {
                     int Id;
                     String inputLable = "ID Number ";
-                    String idInput = login.acceptNewdata(inputLable);
+                    String idInput = acceptNewData.acceptNewdata(inputLable);
                     if (idInput.equals(""))
                         idInput = "0";
                     Id = Integer.parseInt(idInput);
@@ -308,14 +307,14 @@ public class Main extends Application {
                 });
 
                 // Add worker
-                button2.setOnAction(ex -> login.addNewdata("Worker"));
+                button2.setOnAction(ex -> acceptNewData.addNewdata("Worker"));
 
                 // delete worker
                 button3.setOnAction(ex -> {
                     alertbox.alertWarnning("It may delete all information!!!");
                     int Id;
                     String inputLable = "ID Number ";
-                    String idInput = login.acceptNewdata(inputLable);
+                    String idInput = acceptNewData.acceptNewdata(inputLable);
                     if (idInput.equals(""))
                         idInput = "0";
                     Id = Integer.parseInt(idInput);
@@ -326,7 +325,7 @@ public class Main extends Application {
                 button4.setOnAction(ex -> {
                     int accNo;
                     String inputLable = "Account Number ";
-                    inputLable = login.acceptNewdata(inputLable);
+                    inputLable = acceptNewData.acceptNewdata(inputLable);
                     if (inputLable.equals(""))
                         inputLable = "0";
                     accNo = Integer.parseInt(inputLable);
