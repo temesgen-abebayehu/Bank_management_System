@@ -3,15 +3,15 @@ import java.sql.*;
 
 public class Customer {
 
-    private String url = "jdbc:mysql://localhost:4306/bank_system";
-    private String username = "root";
-    private String password = "root";
+     String url = "jdbc:mysql://localhost:4306/bank_system";
+     String username = "root";
+     String password = "root";
 
-    private Connection connection = null;
-    private Statement statement = null;
-    private ResultSet resultSet = null;
+     Connection connection = null;
+     Statement statement = null;
+     ResultSet resultSet = null;
 
-    private Alertbox alertbox = new Alertbox();
+    Alertbox alertbox = new Alertbox();
 
     public int getAccountNo(int accNo) {
         try {
@@ -277,13 +277,13 @@ public class Customer {
         }
     }
 
-    private void establishConnection() throws SQLException, ClassNotFoundException {
+    public void establishConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(url, username, password);
         statement = connection.createStatement();
     }
 
-    private void closeResources() {
+    public void closeResources() {
         try {
             if (resultSet != null)
                 resultSet.close();

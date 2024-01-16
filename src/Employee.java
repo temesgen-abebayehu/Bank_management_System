@@ -2,12 +2,12 @@ import java.sql.*;
 
 public class Employee {
 
-    private String url = "jdbc:mysql://localhost:4306/bank_system";
-    private String username = "root";
-    private String password = "root";
-    private Connection connection = null;
-    private Statement statement = null;
-    private ResultSet resultSet = null;
+     String url = "jdbc:mysql://localhost:4306/bank_system";
+     String username = "root";
+     String password = "root";
+     Connection connection = null;
+     Statement statement = null;
+     ResultSet resultSet = null;
 
     // class
     Alertbox alertbox = new Alertbox();
@@ -223,13 +223,13 @@ public class Employee {
         return count;
     }
 
-    private void connectToDatabase() throws ClassNotFoundException, SQLException {
+    public void connectToDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(url, username, password);
         statement = connection.createStatement();
     }
 
-    private void closeResources() {
+    public void closeResources() {
         try {
             if (resultSet != null)
                 resultSet.close();
