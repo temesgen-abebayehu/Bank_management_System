@@ -24,9 +24,7 @@ public class Login {
 
     // class    
     Customer customer = new Customer();
-    Employee employee = new Employee();
-
-   
+    Employee employee = new Employee();   
 
     static int identifire;
 

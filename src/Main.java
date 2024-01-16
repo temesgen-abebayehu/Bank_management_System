@@ -389,7 +389,7 @@ public class Main extends Application {
     public void updateProfile(String message, int id) {
         Stage window = new Stage();
         window.setTitle("Update Profile");
-        window.setMinHeight(250);
+        window.setMinHeight(400);
         window.setMinWidth(400);
 
         Label choice = new Label("This Will Change Your Information!!! ");
@@ -419,15 +419,30 @@ public class Main extends Application {
         submitButton.setStyle("-fx-background-color: blue;");
         submitButton.setTextFill(Color.WHITE);
 
+        //background imagi
+        Image backImage = new Image("/image/updateback.jpg");
+        BackgroundImage backgroundImage = new BackgroundImage(
+            backImage,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(400, 160, false, false, false, false)
+        );
+
+        HBox choiceBox = new HBox();
+        choiceBox.getChildren().addAll(choice);
+        choiceBox.setBackground(new Background(backgroundImage));
+        choiceBox.setPadding(new Insets(60,0,60,0));
+
         HBox hBox = new HBox();
         hBox.getChildren().addAll(newLabel, newField);
         hBox.setPadding(new Insets(15,40,15,40));
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(choice, updateComboBox, hBox, submitButton);
+        vBox.getChildren().addAll(choiceBox, updateComboBox, hBox, submitButton);
         vBox.setSpacing(10);
         vBox.setStyle("-fx-background-color: lightblue;");
-        vBox.setAlignment(Pos.CENTER);
+        vBox.setAlignment(Pos.TOP_CENTER);
 
         Scene scene = new Scene(vBox);
         window.setScene(scene);
