@@ -34,7 +34,8 @@ public class InputTransaction {
         VBox vBox = new VBox();
 
         HBox balanceBox = new HBox();
-        HBox recivBox = new HBox();
+        HBox accouBox = new HBox();
+        HBox idBox = new HBox();
         HBox buttonBox = new HBox();
 
         // control fild
@@ -42,12 +43,19 @@ public class InputTransaction {
         balanceLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
         balanceLabel.setTextFill(Color.WHITE);
         TextField balanceTextField = new TextField();
-        Label recivLabel = new Label("Enter Reciver Acount No:  ");
-        recivLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
-        recivLabel.setTextFill(Color.WHITE);
-        TextField recivField = new TextField();
 
-        Button sumiButton = new Button("Semmit");
+        Label accouLabel = new Label("Enter Reciver Acount No:  ");
+        accouLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
+        accouLabel.setTextFill(Color.WHITE);
+        TextField accouField = new TextField();
+
+        Label idLabel = new Label("Enter Customer ID:  ");
+        idLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
+        idLabel.setTextFill(Color.WHITE);
+        TextField idField = new TextField();
+
+        //summit and clear button
+        Button sumiButton = new Button("Submit");
         sumiButton.setStyle("-fx-background-color: blue;");
         sumiButton.setTextFill(Color.WHITE);
         Button clearButton = new Button("Clear");
@@ -57,20 +65,23 @@ public class InputTransaction {
         balanceBox.setSpacing(10);
         balanceBox.setAlignment(Pos.CENTER_RIGHT);
 
+        accouBox.getChildren().addAll(accouLabel, accouField);
+        accouBox.setAlignment(Pos.CENTER_RIGHT);
+
+        idBox.getChildren().addAll(idLabel, idField);
+        idBox.setAlignment(Pos.CENTER_RIGHT);
+
         buttonBox.getChildren().addAll(sumiButton, clearButton);
         buttonBox.setSpacing(15);
         buttonBox.setPadding(new Insets(15, 0, 0, 120));
 
         if (message.equals("Transfer")) {
-            recivBox.getChildren().addAll(recivLabel, recivField);
-            recivBox.setAlignment(Pos.CENTER_RIGHT);
-
             // box conteiner
-            vBox.getChildren().addAll(balanceBox, recivBox, buttonBox);
+            vBox.getChildren().addAll(balanceBox, accouBox, buttonBox);
 
             sumiButton.setOnAction(e -> {
                 double bala = Double.parseDouble(balanceTextField.getText());
-                int reciverNO = Integer.parseInt(recivField.getText());
+                int reciverNO = Integer.parseInt(accouField.getText());
 
                 // call withdraw method
                 transaction.transferMoney(identifire, bala, reciverNO);
@@ -78,11 +89,7 @@ public class InputTransaction {
             });
         }
 
-        else {
-
-            // box conteiner
-            vBox = new VBox();
-            vBox.getChildren().addAll(balanceBox, buttonBox);
+        else {       
 
             if (message.equals("Deposit")) {
                 Label accountLabel = new Label("Enter Account Number: ");
@@ -110,16 +117,21 @@ public class InputTransaction {
             else {
                 sumiButton.setOnAction(e -> {
                     double bala = Double.parseDouble(balanceTextField.getText());
+                    int accNo = Integer.parseInt(accouField.getText());
+                    int ID = Integer.parseInt(idField.getText());
 
                     // call withdraw method
-                    transaction.withdrawMoney(identifire, bala);
+                    transaction.withdrawMoney(accNo,ID, bala);
                     window.close();
                 });
+
+                //withdraw box
+                vBox.getChildren().addAll(accouBox,idBox,balanceBox, buttonBox);
             }
         }
 
         clearButton.setOnAction(e -> {
-            recivField.setText("");
+            accouField.setText("");
             balanceTextField.setText("");
         });
 

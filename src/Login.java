@@ -21,7 +21,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Login {
-
     // class    
     Customer customer = new Customer();
     Employee employee = new Employee();   
@@ -80,7 +79,7 @@ public class Login {
         passwordBox.setAlignment(Pos.CENTER_RIGHT);
 
         // buttun
-        Button sumiButton = new Button("Semmit");
+        Button sumiButton = new Button("Submit");
         Button clearButton = new Button("Clear");
 
         sumiButton.setStyle("-fx-background-color: blue;");
@@ -134,5 +133,4 @@ public class Login {
         return identifire;
     }
 
-    
 }

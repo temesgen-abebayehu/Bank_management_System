@@ -56,7 +56,7 @@ public class Transaction {
         }
     }
 
-    public void withdrawMoney(int accNo, double bala) {
+    public void withdrawMoney(int accNo,int ID, double bala) {
         try {
             establishConnection();
 
@@ -67,7 +67,7 @@ public class Transaction {
             int found = 0;
             while (resultSet.next()) {
 
-                if (accNo == resultSet.getInt("account_no")) {
+                if (accNo == resultSet.getInt("account_no")&&ID==resultSet.getInt("id")) {
                     if (resultSet.getDouble("balance") > bala) {
                         String updateQuery = "UPDATE customer SET balance=? WHERE account_no=?";
                         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {

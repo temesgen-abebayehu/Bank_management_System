@@ -2,6 +2,7 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -87,13 +88,64 @@ public class Main extends Application {
 
         helpMenu.setOnAction(e -> {
             String helpMessage = "********************************\n" +
-                    "\tHELP CENTER\n" + "\n________________________________" +
-                    "\nCall Us 24/7: \t911" +
-                    "\nEmail Us:\tbanksystem@gmail.com" +
-                    "\nMain Ofice:\tAddis Ababa, Ethiopia" +
+                    "\tHELP CENTER\n" + "\n________________________________\n" +
+                    "\nCall Us 24/7: \t\t911" +
+                    "\nEmail Us:\t\tbanksystem@gmail.com" +
+                    "\nMain Ofice:\t\tAddis Ababa, Ethiopia" +
                     "\n*********************************";
 
             alertbox.dispalyInfo(helpMessage);
+        });
+
+        //mouse effect
+        userMenu.setOnMouseEntered(e -> {
+            userMenu.setStyle("-fx-background-color: blue;");
+            userMenu.setCursor(Cursor.HAND);
+        });
+
+        userMenu.setOnMouseExited(e -> {
+            userMenu.setStyle("-fx-background-color: lightgray;");
+            userMenu.setCursor(Cursor.DEFAULT);
+        });
+
+        workerButton.setOnMouseEntered(e -> {
+            workerButton.setStyle("-fx-background-color: blue;");
+            workerButton.setCursor(Cursor.HAND);
+        });
+
+        workerButton.setOnMouseExited(e -> {
+            workerButton.setStyle("-fx-background-color: lightgray;");
+            workerButton.setCursor(Cursor.DEFAULT);
+        });
+
+        adminButton.setOnMouseEntered(e -> {
+            adminButton.setStyle("-fx-background-color: blue;");
+            adminButton.setCursor(Cursor.HAND);
+        });
+
+        adminButton.setOnMouseExited(e -> {
+            adminButton.setStyle("-fx-background-color: lightgray;");
+            adminButton.setCursor(Cursor.DEFAULT);
+        });
+
+        aboutMenu.setOnMouseEntered(e -> {
+            aboutMenu.setStyle("-fx-background-color: blue;");
+            aboutMenu.setCursor(Cursor.HAND);
+        });
+
+        aboutMenu.setOnMouseExited(e -> {
+            aboutMenu.setStyle("-fx-background-color: lightgray;");
+            aboutMenu.setCursor(Cursor.DEFAULT);
+        });
+
+        helpMenu.setOnMouseEntered(e -> {
+            helpMenu.setStyle("-fx-background-color: blue;");
+            helpMenu.setCursor(Cursor.HAND);
+        });
+
+        helpMenu.setOnMouseExited(e -> {
+            helpMenu.setStyle("-fx-background-color: lightgray;");
+            helpMenu.setCursor(Cursor.DEFAULT);
         });
 
         // background image
@@ -103,7 +155,7 @@ public class Main extends Application {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
-                new BackgroundSize(700, 650, false, false, false, false));
+                new BackgroundSize(900, 700, false, false, false, false));
 
         // top menu bar and all operation perform on it
         HBox menuBar = new HBox();
@@ -122,7 +174,7 @@ public class Main extends Application {
         root.setCenter(wellcome);
         root.setBackground(new Background(background));
 
-        Scene scene = new Scene(root, 700, 650);
+        Scene scene = new Scene(root, 900, 700);
         primaryStage.setTitle("Bank System");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -164,40 +216,36 @@ public class Main extends Application {
 
         if (measege.equals("User")) {
             // button list
-            button1.setText("Withdraw Money");
-            button2.setText("Transfer Money");
-            button3.setText("View Profile");
-            button4.setText("Check Balance");
-            button5.setText("Update Profile");
-            button6.setText("Logout");
+            button1.setText("Transfer Money");
+            button2.setText("View Profile");
+            button3.setText("Check Balance");
+            button4.setText("Update Profile");
+            button5.setText("Delete Account");
 
             vBox = new VBox();
-            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5, button6,exitBox);
+            vBox.getChildren().addAll(choice, button1, button2, button3, button4, button5,exitBox);
 
             // Action listner
-            // Withdraw money
-            button1.setOnAction(ex -> inputTransaction.inputTransaction("Withdraw", id));
-
             // Transfer money
-            button2.setOnAction(ex -> inputTransaction.inputTransaction("Transfer", id));
+            button1.setOnAction(ex -> inputTransaction.inputTransaction("Transfer", id));
 
             // view Profile
-            button3.setOnAction(ex -> {
+            button2.setOnAction(ex -> {
                 String profile = customer.seeCustomerProfile(id);
                 alertbox.dispalyInfo(profile);
             });
 
             // check balance
-            button4.setOnAction(ex -> {
+            button3.setOnAction(ex -> {
                 String balanceInfo = customer.checkBalance(id);
                 alertbox.dispalyInfo(balanceInfo);
             });
 
             // update profile
-            button5.setOnAction(ex -> updateProfile(measege, id));
+            button4.setOnAction(ex -> updateProfile(measege, id));
 
             // logout
-            button6.setOnAction(ex -> {
+            button5.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all your information!!!");
                 customer.logoutCustomer(id);
             });
@@ -215,8 +263,8 @@ public class Main extends Application {
         else if (measege.equals("Worker")) {
             // button list
             button1.setText("Diposit Customer Money");
-            button2.setText("Add Customer");
-            button3.setText("Delete Customer");
+            button2.setText("Withdraw Customer Money");
+            button3.setText("Create New Account");
             button4.setText("Search Customer");
             button5.setText("Update Profile");
             button6.setText("View Profile");
@@ -228,21 +276,11 @@ public class Main extends Application {
             // Deposit money
             button1.setOnAction(ex -> inputTransaction.inputTransaction("Deposit", id));
 
-            // Add customer
-            button2.setOnAction(ex -> acceptNewData.addNewdata("Customer"));
+            // withdraw customer money
+            button2.setOnAction(ex -> inputTransaction.inputTransaction("Withdraw", id));
 
-            // delete customer
-            button3.setOnAction(ex -> {
-                alertbox.alertWarnning("It may delete all information!!!");
-                int accNo;
-                String inputLable = "Account Number ";
-                String accountString = acceptNewData.acceptNewdata(inputLable);
-                if (accountString.equals("")) {
-                    accountString = "0";
-                }
-                accNo = Integer.parseInt(accountString);
-                customer.logoutCustomer(accNo);
-            });
+            // Add customer
+            button3.setOnAction(ex -> acceptNewData.addNewdata("Customer"));
 
             // searchCustomer
             button4.setOnAction(ex -> {

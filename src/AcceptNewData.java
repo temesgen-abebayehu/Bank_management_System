@@ -36,7 +36,7 @@ public class AcceptNewData {
         TextField nameTextField = new TextField();
 
         // control fild
-        Button sumiButton = new Button("Semmit");
+        Button sumiButton = new Button("Submit");
         sumiButton.setStyle("-fx-background-color: blue;");
         sumiButton.setTextFill(Color.WHITE);
         Button clearButton = new Button("Clear");
@@ -113,7 +113,7 @@ public class AcceptNewData {
         TextField emailField = new TextField();
 
         // control fild
-        Button sumiButton = new Button("Semmit");
+        Button sumiButton = new Button("Submit");
         Button clearButton = new Button("Clear");
 
         ComboBox<String> genderComboBox = new ComboBox<>();
