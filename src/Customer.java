@@ -56,6 +56,8 @@ public class Customer {
             }
 
         } catch (Exception e) {
+            accNo = -1;
+            alertbox.alertWarnning("Something Error happes.Please Check Database Connection");
             e.printStackTrace();
         } finally {
             closeResources();
@@ -88,7 +90,7 @@ public class Customer {
             }
 
             if (found == 0) {
-                System.out.println("Account Number not found");
+                alertbox.alertError("Account Number not found");
             }
 
         } catch (Exception e) {

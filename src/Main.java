@@ -83,7 +83,20 @@ public class Main extends Application {
         });
 
         aboutMenu.setOnAction(e -> {
-            alertbox.alertAbout();
+            // founder name
+        String message = "\n***********************************************\n" +
+                "\tMembers Name\t\tID Number\n" +
+                "1. Temesgen Abebayehu\tETS 1534/14\n" +
+                "2. Tesfamicael Almaw\t\tETS 1544/14\n" +
+                "3. Tewuhbo Mihret\t\tETS 1554/14\n" +
+                "4. Tinsae Daniel\t\t\tETS 1560/14\n" +
+                "5. Tsion Kassahun\t\tETS 1585/14\n" +
+                "6. Tsiyon Gashaw\t\t\tETS 1588/14\n" +
+
+                "\n\n\tSubmitted to: Mr. Fuad Yimer" +
+                "\n\tSubmission date: Feb 3/2024" +
+                "\n***********************************************\n";
+            alertbox.dispalyInfo(message);
         });
 
         helpMenu.setOnAction(e -> {
@@ -154,7 +167,7 @@ public class Main extends Application {
                 backgroudImage,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
+                BackgroundPosition.CENTER,
                 new BackgroundSize(900, 700, false, false, false, false));
 
         // top menu bar and all operation perform on it
@@ -409,8 +422,9 @@ public class Main extends Application {
 
             else if (roles.equals("WORKER")) {
                 vBox = new VBox();
-                alertbox.alertWarnning("Your data are not found in ADMINISTRATOR list");
+                alertbox.alertWarnning("Your data not found in ADMINISTRATOR list");
                 window.close();
+                return;
             }
         }
 

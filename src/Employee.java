@@ -26,11 +26,12 @@ public class Employee {
 
             if (found == 0) {
                 ID = -1;
-                String alert = "IInccorect ID or Password.";
-                alertbox.alertError(alert);
+                alertbox.alertError("IInccorect ID or Password.");
             }
 
         } catch (Exception e) {
+            alertbox.alertWarnning("Something Error happes.Please Check Database Connection");
+            ID = -1;
             e.printStackTrace();
         } finally {
             closeResources();
@@ -62,8 +63,7 @@ public class Employee {
             }
 
             if (found == 0) {
-                String alert = "Id not found";
-                alertbox.alertError(alert);
+                alertbox.alertError("Id not found");
             }
 
         } catch (Exception e) {
@@ -94,11 +94,9 @@ public class Employee {
                             int rowsAffected = preparedStatement.executeUpdate();
 
                             if (rowsAffected > 0) {
-                                String alert = "Data updated successfully.";
-                                alertbox.alertConfirm(alert);
+                                alertbox.alertConfirm("Data updated successfully.");
                             } else {
-                                String alert = "No data updated. ID Number not found.";
-                                alertbox.alertError(alert);
+                                alertbox.alertError("No data updated. ID Number not found.");
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
