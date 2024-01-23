@@ -44,7 +44,7 @@ public class InputTransaction {
         balanceLabel.setTextFill(Color.WHITE);
         TextField balanceTextField = new TextField();
 
-        Label accouLabel = new Label("Enter Reciver Acount No:  ");
+        Label accouLabel = new Label();
         accouLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
         accouLabel.setTextFill(Color.WHITE);
         TextField accouField = new TextField();
@@ -76,6 +76,7 @@ public class InputTransaction {
         buttonBox.setPadding(new Insets(15, 0, 0, 120));
 
         if (message.equals("Transfer")) {
+            accouLabel.setText("Enter Reciver Acount No:  ");
             // box conteiner
             vBox.getChildren().addAll(balanceBox, accouBox, buttonBox);
 
@@ -92,19 +93,13 @@ public class InputTransaction {
         else {       
 
             if (message.equals("Deposit")) {
-                Label accountLabel = new Label("Enter Account Number: ");
-                accountLabel.setFont(Font.font("Times", FontWeight.BOLD, 16));
-                accountLabel.setTextFill(Color.WHITE);
-                TextField acountField = new TextField();
-                vBox = new VBox();
-                HBox acountBox = new HBox();
-
-                acountBox.getChildren().addAll(accountLabel, acountField);
-                acountBox.setAlignment(Pos.CENTER_RIGHT);
-                vBox.getChildren().addAll(acountBox, balanceBox, buttonBox);
+                accouLabel.setText("Enter Account No: ");
+                
+                //Deposit box
+                vBox.getChildren().addAll(accouBox, balanceBox, buttonBox);
 
                 sumiButton.setOnAction(e -> {
-                    int accNo = Integer.parseInt(acountField.getText());
+                    int accNo = Integer.parseInt(accouField.getText());
                     double bala = Double.parseDouble(balanceTextField.getText());
 
                     // call diposit method
@@ -115,6 +110,7 @@ public class InputTransaction {
 
             // Withdraw
             else {
+                accouLabel.setText("Enter Account NO: ");
                 sumiButton.setOnAction(e -> {
                     double bala = Double.parseDouble(balanceTextField.getText());
                     int accNo = Integer.parseInt(accouField.getText());

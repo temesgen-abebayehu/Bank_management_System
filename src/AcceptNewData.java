@@ -26,6 +26,9 @@ public class AcceptNewData {
         window.setMinHeight(300);
         window.setMinWidth(400);
 
+        //reset accepted new data string
+        newData = "";
+
         // box filed
         VBox vBox = new VBox();
 
@@ -80,6 +83,9 @@ public class AcceptNewData {
         window.setTitle("Add New " + message);
         window.setMinHeight(500);
         window.setMinWidth(400);
+
+        //reset gender string 
+        gender = "";
 
         // box filed
         VBox vBox = new VBox();

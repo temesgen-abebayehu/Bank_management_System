@@ -9,8 +9,9 @@ public class Alertbox {
         Stage primaryStage = new Stage();
         Alert alert = new Alert(AlertType.CONFIRMATION);
 
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText(message);
+        alert.setTitle("Confirmion Dialog");
+        alert.setContentText(message);
+        //alert.setHeaderText(message);
         alert.showAndWait();
         primaryStage.close();
     }
