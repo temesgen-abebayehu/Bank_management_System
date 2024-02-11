@@ -167,7 +167,7 @@ public class Main extends Application {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(900, 700, false, false, false, false));
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
 
         // top menu bar and all operation perform on it
         HBox menuBar = new HBox();
@@ -178,7 +178,7 @@ public class Main extends Application {
 
         // Wellcome message
         Label wellcome = new Label("\t\tWELLCOME To \nBank Management System");
-        wellcome.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        wellcome.setFont(Font.font("Arial", FontWeight.BOLD, 50));
         wellcome.setTextFill(Color.GOLD);
 
         BorderPane root = new BorderPane();
@@ -186,7 +186,7 @@ public class Main extends Application {
         root.setCenter(wellcome);
         root.setBackground(new Background(background));
 
-        Scene scene = new Scene(root, 900, 700);
+        Scene scene = new Scene(root, 900, 750);
         primaryStage.setTitle("Bank System");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -201,16 +201,13 @@ public class Main extends Application {
         window.setTitle(title);
         window.setMinHeight(450);
         window.setMinWidth(450);
+        window.setResizable(false);
 
+        // main box
         VBox vBox = new VBox();
+
         // background image
         Image backgroudImage = new Image("/image/photoadmin.jpeg");
-        BackgroundImage background = new BackgroundImage(
-                backgroudImage,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(450, 450, false, false, false, false));
 
         Label choice = new Label("Select From The List");
         choice.setFont(Font.font("Times", FontWeight.BOLD, 20));
@@ -259,17 +256,11 @@ public class Main extends Application {
             // logout
             button5.setOnAction(ex -> {
                 alertbox.alertWarnning("It may delete all your information!!!");
-                updateProfile("Delete", id);                
+                updateProfile("Delete", id);
             });
 
             // background image
             backgroudImage = new Image("/image/photouser.jpg");
-            background = new BackgroundImage(
-                    backgroudImage,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.CENTER,
-                    new BackgroundSize(400, 400, false, false, false, false));
         }
 
         else {
@@ -371,6 +362,8 @@ public class Main extends Application {
                     alertbox.dispalyInfo(displayCapital);
                 });
 
+                // background image
+                backgroudImage = new Image("/image/photoadmin.jpeg");
             }
 
             // worker operation
@@ -424,12 +417,7 @@ public class Main extends Application {
 
                 // background image
                 backgroudImage = new Image("/image/photoworker.jpg");
-                background = new BackgroundImage(
-                        backgroudImage,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER,
-                        new BackgroundSize(400, 400, false, false, false, false));
+
             }
 
             // unauthorized access
@@ -443,6 +431,14 @@ public class Main extends Application {
             }
 
         }
+
+        // background control
+        BackgroundImage background = new BackgroundImage(
+                backgroudImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(450, 450, false, false, false, false));
 
         vBox.setAlignment(Pos.CENTER_LEFT);
         vBox.setSpacing(10);
@@ -493,13 +489,13 @@ public class Main extends Application {
         hBox.getChildren().addAll(newLabel, newField);
         hBox.setPadding(new Insets(15, 40, 15, 40));
 
-        VBox vBox = new VBox();       
+        VBox vBox = new VBox();
 
-        //confirm to delete customer info
+        // confirm to delete customer info
         if (message.equals("Delete")) {
             clue.setText("This will be remove all your information");
 
-            updateComboBox.setPromptText("Do you want to delete account?");
+            updateComboBox.setPromptText("Do you want to delete your account?");
             updateComboBox.getItems().addAll("YES", "NO");
             updateComboBox.setOnAction(e -> {
                 updateChoice = updateComboBox.getValue();
@@ -535,7 +531,7 @@ public class Main extends Application {
                 window.close();
             });
 
-            //update box
+            // update box
             vBox.getChildren().addAll(choiceBox, updateComboBox, hBox, submitButton);
         }
 

@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,7 +53,7 @@ public class Login {
         passwordLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         passwordLabel.setTextFill(Color.WHITE);
 
-        TextField passwordTextField = new TextField();
+        PasswordField passwordTextField = new PasswordField();
         TextField accounTextField = new TextField();
 
         Label accountLabel = new Label(lable);
@@ -96,7 +97,7 @@ public class Login {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(400, 400, false, false, false, false));
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO,false, false, true, true));
 
         // box conteiner
         vBox.getChildren().addAll(choice, acountBox, passwordBox, buttonBox);

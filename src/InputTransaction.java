@@ -138,7 +138,7 @@ public class InputTransaction {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(400, 400, false, false, false, false));
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
 
         vBox.setSpacing(10);
         vBox.setBackground(new Background(background));
