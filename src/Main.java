@@ -523,7 +523,7 @@ public class Main extends Application {
 
             submitButton.setOnAction(e -> {
                 String newdata = newField.getText();
-                if (message.equals("User")) {
+                if (message.equals("Customer")) {
                     customer.editCustomerProfile(id, newdata, updateChoice);
                 } else {
                     employee.editEmployeeProfile(id, newdata, updateChoice);
